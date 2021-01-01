@@ -22,7 +22,8 @@ public class ChaosEvents {
             new EventHyperspeed(),
             new EventWrongCoords(),
             new EventHoleInTheInv(),
-            new EventOuttaThisWorld()
+            new EventOuttaThisWorld(),
+            new EventCursedCraft()
     };
 
     public static HashMap<String, ChaosEvent> getAsMap() {
