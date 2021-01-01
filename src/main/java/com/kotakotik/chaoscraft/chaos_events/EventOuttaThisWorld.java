@@ -1,0 +1,54 @@
+package com.kotakotik.chaoscraft.chaos_events;
+
+import com.kotakotik.chaoscraft.ChaosEvent;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.Direction;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.Dimension;
+import net.minecraft.world.DimensionType;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.world.ForgeWorldType;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistry;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class EventOuttaThisWorld extends ChaosEvent {
+    @Override
+    public String getEnglish() {
+        return "Outta this world";
+    }
+
+    @Override
+    public String getId() {
+        return "outta_this_world";
+    }
+
+    @Override
+    public void start(MinecraftServer server) {
+        for(ServerPlayerEntity player : server.getPlayerList().getPlayers()) {
+            List<World> worlds = new ArrayList<>();
+
+            worlds.add(server.getWorld(World.OVERWORLD));
+            worlds.add(server.getWorld(World.THE_END));
+            worlds.add(server.getWorld(World.THE_NETHER));
+
+            worlds.remove(player.getServerWorld());
+
+            ServerWorld world = (ServerWorld) Util.getRandomObject(worlds.toArray(), new Random());
+
+            player.teleport(world, player.getPosX(), player.getPosY(), player.getPosZ(), 0, player.rotationPitch);
+
+            world.setBlockState(new BlockPos(player.getPosX(), player.getPosY(), player.getPosZ()),
+                    Blocks.AIR.getDefaultState());
+        }
+    }
+}
