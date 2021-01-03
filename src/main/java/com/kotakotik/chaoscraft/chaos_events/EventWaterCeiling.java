@@ -7,15 +7,15 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class EventWaterCelling extends ChaosEvent {
+public class EventWaterCeiling extends ChaosEvent {
     @Override
     public String getEnglish() {
-        return "Water celling";
+        return "Water ceiling";
     }
 
     @Override
     public String getId() {
-        return "water_celling";
+        return "water_ceiling";
     }
 
     @Override

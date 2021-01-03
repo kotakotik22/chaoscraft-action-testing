@@ -7,15 +7,15 @@ import net.minecraft.fluid.LavaFluid;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
-public class EventLavaCelling extends ChaosEvent {
+public class EventLavaCeiling extends ChaosEvent {
     @Override
     public String getEnglish() {
-        return "Lava celling";
+        return "Lava ceiling";
     }
 
     @Override
     public String getId() {
-        return "lava_celling";
+        return "lava_ceiling";
     }
 
     @Override
