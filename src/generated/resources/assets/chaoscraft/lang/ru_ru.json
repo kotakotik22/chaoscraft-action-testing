@@ -1,0 +1,23 @@
+{
+  "chaoscraft.event.actually_real_diamond": "Реально настоящий алмаз",
+  "chaoscraft.event.charged_attack": "Заряженная атака!",
+  "chaoscraft.event.cursed_craft": "CursedCraft",
+  "chaoscraft.event.hole_in_the_inv": "Дыра в инвентаре",
+  "chaoscraft.event.hyperspeed": "Гиперскорость",
+  "chaoscraft.event.invert_x_and_z": "Инвертировать X и Z",
+  "chaoscraft.event.kill_all_players": "Убить всех игроков",
+  "chaoscraft.event.lava_celling": "Лавовый потолок",
+  "chaoscraft.event.outta_this_world": "Вне этого мира",
+  "chaoscraft.event.teleport_all_players_up": "Телепортировать всех игроков вверх",
+  "chaoscraft.event.ten_hour_mining_session": "Десятичасовая сессия копания",
+  "chaoscraft.event.totally_real_diamond": "Скорее всего настоящие алмазы",
+  "chaoscraft.event.water_celling": "Водяной потолок",
+  "chaoscraft.event.wrong_coords": "Я сказал позитивный X, а не негативный!",
+  "chaoscraft.event.zombie_raid": "Рейд зомби!",
+  "chaoscraft.event_started": "§6§lНачавшееся событие: %s",
+  "chaoscraft.timed_event_started": "§6§lНачавшееся событие: %s (%d секунд)",
+  "chaoscraft.timer": "Следующее событие через %s секунд",
+  "death.attack.chaoscraft.kill_all_players": "%s был убит от хаоса",
+  "death.attack.chaoscraft.totally_real_diamond_death": "%s понял, что алмазы были не настоящие",
+  "item.chaoscraft.totally_real_diamond": "Скорее всего настоящий алмаз"
+}
