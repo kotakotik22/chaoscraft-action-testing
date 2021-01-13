@@ -1,12 +1,14 @@
 package com.kotakotik.chaoscraft.chaos_events;
 
 import com.kotakotik.chaoscraft.ChaosEvent;
+import com.kotakotik.chaoscraft.ChaosEventRegister;
 import com.kotakotik.chaoscraft.ModItems;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.MinecraftServer;
 
+@ChaosEventRegister
 public class EventActuallyRealDiamond extends ChaosEvent {
     @Override
     public String getEnglish() {

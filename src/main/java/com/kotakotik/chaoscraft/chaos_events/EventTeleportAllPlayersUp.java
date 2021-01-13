@@ -1,10 +1,12 @@
 package com.kotakotik.chaoscraft.chaos_events;
 
 import com.kotakotik.chaoscraft.ChaosEvent;
+import com.kotakotik.chaoscraft.ChaosEventRegister;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.server.ServerWorld;
 
+@ChaosEventRegister
 public class EventTeleportAllPlayersUp extends ChaosEvent {
     @Override
     public String getEnglish() {

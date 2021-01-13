@@ -16,7 +16,7 @@ public class ChaosEventTranslationGeneration extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        for(ChaosEvent event : ChaosEvents.Events) {
+        for(ChaosEvent event : ChaosEvents.getAsList()) {
             add(event.getTranslationKey(), event.getEnglish());
             HashMap<String, String> extraTranslations = event.getExtraTranslations();
             for(String key : extraTranslations.keySet()) {

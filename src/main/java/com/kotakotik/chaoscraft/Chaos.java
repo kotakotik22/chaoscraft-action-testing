@@ -6,6 +6,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -15,9 +16,14 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.forgespi.language.ModFileScanData;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.objectweb.asm.Type;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -74,11 +80,40 @@ public class Chaos {
                 collect(Collectors.toList()));
     }
 
+    public static final List<Class<? extends ChaosEvent>> eventz = new ArrayList<>();
+    public static final List<ChaosEvent> eventInstances = new ArrayList<>();
+
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
-    public void onServerStarting(FMLServerStartingEvent event) {
+    public void onServerStarting(FMLServerStartingEvent event) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         // do something when the server starts
         LOGGER.info("HELLO from server starting");
+        Type ann = Type.getType(ChaosEventRegister.class);
+        LOGGER.info("finding events");
+        List<ModFileScanData.AnnotationData> events = new ArrayList<>();
+        // too lazy to stop using annotation and instead just use class.isAssignableFrom(...) on every class
+        ModList.get().getAllScanData().forEach((mod) -> mod.getAnnotations().stream().filter((an) -> (an.getAnnotationType().equals(ann))).forEach(events::add));
+        eventz.clear();
+        eventInstances.clear();
+        LOGGER.info("found " + events.size() + " events");
+        for (ModFileScanData.AnnotationData ev : events) {
+            Class<?> clazz = Class.forName(ev.getClassType().getClassName());
+            // i never liked the idea of getting classes using their name or file location or something like that,
+            // but i guess i have to do this :/
+//            Class<? extends ChaosEvent> eventClass = (Class<? extends ChaosEvent>) ;
+//            System.out.println(clazz.isAssignableFrom(ChaosEvent.class));
+            if(ChaosEvent.class.isAssignableFrom(clazz)) {
+                Class<? extends ChaosEvent> eventClass = (Class<? extends ChaosEvent>) clazz;
+                eventz.add(eventClass);
+                eventInstances.add(eventClass.newInstance());
+            } else {
+                LOGGER.info(ev.getClassType().getClassName() + " has event annotation but does not extend ChaosEvent");
+            }
+        }
+        LOGGER.info("registered " + eventz.size() + " events");
+        if(eventz.size() == 0) {
+            LOGGER.info("uh oh! we have 0 events, expect a crash soon!");
+        }
     }
 
     // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD

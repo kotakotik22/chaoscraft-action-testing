@@ -1,6 +1,7 @@
 package com.kotakotik.chaoscraft.chaos_events;
 
 import com.kotakotik.chaoscraft.ChaosEvent;
+import com.kotakotik.chaoscraft.ChaosEventRegister;
 import net.minecraft.command.impl.SummonCommand;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
@@ -16,6 +17,7 @@ import org.lwjgl.system.CallbackI;
 
 import java.lang.reflect.Field;
 
+@ChaosEventRegister
 public class EventChargedAttack extends ChaosEvent {
     @Override
     public String getEnglish() {
