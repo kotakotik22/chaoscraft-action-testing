@@ -1,17 +1,12 @@
 package com.kotakotik.chaoscraft.chaos_events;
 
 import com.kotakotik.chaoscraft.ChaosEvent;
-import com.kotakotik.chaoscraft.ChaosEventRegister;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
-import org.lwjgl.system.CallbackI;
 
 import java.util.HashMap;
 
-@ChaosEventRegister
 public class EventKillAllPlayers extends ChaosEvent {
     @Override
     public String getEnglish() {

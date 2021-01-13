@@ -1,13 +1,9 @@
 package com.kotakotik.chaoscraft.chaos_events;
 
 import com.kotakotik.chaoscraft.ChaosEvent;
-import com.kotakotik.chaoscraft.ChaosEventRegister;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.server.MinecraftServer;
 
-@ChaosEventRegister
 public class EventHoleInTheInv extends ChaosEvent {
     @Override
     public String getEnglish() {

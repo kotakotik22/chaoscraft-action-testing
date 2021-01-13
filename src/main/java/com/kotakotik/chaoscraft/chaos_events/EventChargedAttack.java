@@ -1,23 +1,15 @@
 package com.kotakotik.chaoscraft.chaos_events;
 
 import com.kotakotik.chaoscraft.ChaosEvent;
-import com.kotakotik.chaoscraft.ChaosEventRegister;
-import net.minecraft.command.impl.SummonCommand;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
 import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import org.lwjgl.system.CallbackI;
 
 import java.lang.reflect.Field;
 
-@ChaosEventRegister
 public class EventChargedAttack extends ChaosEvent {
     @Override
     public String getEnglish() {
