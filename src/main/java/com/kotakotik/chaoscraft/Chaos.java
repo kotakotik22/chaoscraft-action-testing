@@ -2,6 +2,7 @@ package com.kotakotik.chaoscraft;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -63,11 +64,14 @@ public class Chaos {
                 {
                     try {
                         Type type = (Type) scanDataClassField.get(an);
+                        if(type.equals(Type.getType(GlobalEntityTypeAttributes.class))) return false;
+                        LOGGER.info(type.getClassName());
                         return ChaosEvent.class.isAssignableFrom(Class.forName(type.getClassName()));
-                    } catch (ClassNotFoundException | IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (ExceptionInInitializerError ignored) {
-
+                    } catch (ExceptionInInitializerError | NoClassDefFoundError | Exception ignored) { // a bunch of errors probably from loading stuff i shouldnt load lol
+                        // hmm i wonder if ignoring that many exceptions will break anything hmmmmm
+                        // got a joke for you
+                        // running from the exceptions like i run from my problems
+                        // TODO: test the hell out of this because i have a feeling its gonna be really glitchy
                     }
                     return false;
                 }
@@ -83,6 +87,10 @@ public class Chaos {
                 e.printStackTrace();
             }
         }));
+        LOGGER.info("registered " + eventz.size() + " events");
+        if(eventz.size() == 0) {
+            LOGGER.info("uh oh! we have 0 events, expect a crash soon after world start!");
+        }
 //        eventz.clear();
 //        eventInstances.clear();
 //        LOGGER.info("found " + events.size() + " events");
@@ -100,10 +108,6 @@ public class Chaos {
 //                LOGGER.info(ev.getClassType().getClassName() + " has event annotation but does not extend ChaosEvent");
 //            }
 //        }
-        LOGGER.info("registered " + eventz.size() + " events");
-        if(eventz.size() == 0) {
-            LOGGER.info("uh oh! we have 0 events, expect a crash soon!");
-        }
     }
 
     private void setup(final FMLCommonSetupEvent event) {
