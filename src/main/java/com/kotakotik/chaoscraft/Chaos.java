@@ -65,7 +65,6 @@ public class Chaos {
                     try {
                         Type type = (Type) scanDataClassField.get(an);
                         if(type.equals(Type.getType(GlobalEntityTypeAttributes.class))) return false;
-                        LOGGER.info(type.getClassName());
                         return ChaosEvent.class.isAssignableFrom(Class.forName(type.getClassName()));
                     } catch (ExceptionInInitializerError | NoClassDefFoundError | Exception ignored) { // a bunch of errors probably from loading stuff i shouldnt load lol
                         // hmm i wonder if ignoring that many exceptions will break anything hmmmmm
