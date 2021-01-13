@@ -1,0 +1,23 @@
+{
+  "chaoscraft.event.actually_real_diamond": "Faktiski īsts dimants",
+  "chaoscraft.event.charged_attack": "Uzlādēts uzbrukums!",
+  "chaoscraft.event.cursed_craft": "LāstaKrafts",
+  "chaoscraft.event.hole_in_the_inv": "Caurums inventārā",
+  "chaoscraft.event.hyperspeed": "Hiperātrums",
+  "chaoscraft.event.invert_x_and_z": "Invertē X un Z",
+  "chaoscraft.event.kill_all_players": "Nogalināt visus spēlētājus",
+  "chaoscraft.event.lava_ceiling": "Lavas griesti",
+  "chaoscraft.event.outta_this_world": "Ārā no šīs pasaules",
+  "chaoscraft.event.teleport_all_players_up": "Teleportēt visus spēlētājus augšā",
+  "chaoscraft.event.ten_hour_mining_session": "Desmit stundu Iežguves sesija",
+  "chaoscraft.event.totally_real_diamond": "Totāli īsti dimanti",
+  "chaoscraft.event.water_ceiling": "Ūdens griesti",
+  "chaoscraft.event.wrong_coords": "Es teicu tev pozitīvais X, nevis negatīvais!",
+  "chaoscraft.event.zombie_raid": "Zombiju uzbrukums!",
+  "chaoscraft.event_started": "§6§lSākās notikums: %s",
+  "chaoscraft.timed_event_started": "§6§lSākās notikums: %s (%d seconds)",
+  "chaoscraft.timer": "Nākamais notikums notiks pēc %s sekundēm",
+  "death.attack.chaoscraft.kill_all_players": "%s nogalināja haoss",
+  "death.attack.chaoscraft.totally_real_diamond_death": "%s uzzināja ka dimants īstenība neīsts",
+  "item.chaoscraft.totally_real_diamond": "Totāli īsts dimants"
+}
