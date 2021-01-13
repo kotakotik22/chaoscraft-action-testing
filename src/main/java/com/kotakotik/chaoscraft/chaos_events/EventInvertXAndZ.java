@@ -10,7 +10,7 @@ import net.minecraft.world.server.ServerWorld;
 public class EventInvertXAndZ extends ChaosEvent {
     @Override
     public String getEnglish() {
-        return "Invert X and Z";
+        return "Swap X and Z";
     }
 
     @Override

@@ -1,23 +1,6 @@
 {
-  "chaoscraft.event.actually_real_diamond": "Actually real diamond",
-  "chaoscraft.event.charged_attack": "Charged attack!",
-  "chaoscraft.event.cursed_craft": "CursedCraft",
-  "chaoscraft.event.hole_in_the_inv": "Hole in the inventory",
-  "chaoscraft.event.hyperspeed": "Hyperspeed",
-  "chaoscraft.event.invert_x_and_z": "Invert X and Z",
-  "chaoscraft.event.kill_all_players": "Kill all players",
-  "chaoscraft.event.lava_ceiling": "Lava ceiling",
-  "chaoscraft.event.outta_this_world": "Outta this world",
-  "chaoscraft.event.teleport_all_players_up": "Teleport all players up",
-  "chaoscraft.event.ten_hour_mining_session": "Ten hour mining session",
-  "chaoscraft.event.totally_real_diamond": "Totally real diamonds",
-  "chaoscraft.event.water_ceiling": "Water ceiling",
-  "chaoscraft.event.wrong_coords": "I told you positive X, not negative!",
-  "chaoscraft.event.zombie_raid": "Zombie raid!",
   "chaoscraft.event_started": "\u00A76\u00A7lStarted event: %s",
   "chaoscraft.timed_event_started": "\u00A76\u00A7lStarted event: %s (%d seconds)",
   "chaoscraft.timer": "Next event in %s seconds",
-  "death.attack.chaoscraft.kill_all_players": "%s got killed by chaos",
-  "death.attack.chaoscraft.totally_real_diamond_death": "%s found out that the diamond was actually fake",
-  "item.chaoscraft.totally_real_diamond": "Totally real diamond"
+  "death.attack.chaoscraft.totally_real_diamond_death": "%s found out that the diamond was actually fake"
 }
