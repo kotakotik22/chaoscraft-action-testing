@@ -24,7 +24,7 @@ public class TimerRenderer {
             int gui_position_x = 3;
             int gui_position_y = 3;
             MC.fontRenderer.drawString(event.getMatrixStack(),
-                    TranslationKeys.Timer.translate(String.valueOf(Config.SECONDS_FOR_EVENT.get() - ChaosEventHandler.getTicksUntilNext() / 20)),
+                    TranslationKeys.Timer.translate(String.valueOf(Config.SECONDS_FOR_EVENT.get() - ChaosEventHandler.ticksClient / 20)),
                     gui_position_x, gui_position_y,
                     0x454545);
             GL11.glPopMatrix();

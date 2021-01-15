@@ -1,5 +1,7 @@
 package com.kotakotik.chaoscraft;
 
+import com.kotakotik.chaoscraft.networking.ModPacket;
+import com.kotakotik.chaoscraft.networking.ModPacketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
@@ -57,10 +59,11 @@ public class Chaos {
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
+        ModPacketHandler.registerMessages();
+
         Type ann = Type.getType(ChaosEventRegister.class);
         LOGGER.info("finding events");
         List<ModFileScanData.AnnotationData> events = new ArrayList<>();
-        // too lazy to stop using annotation and instead just use class.isAssignableFrom(...) on every class
         ModList.get().getAllScanData().forEach((mod) -> mod.getAnnotations().stream().filter((an) -> (an.getAnnotationType().equals(ann))).forEach(events::add));
         eventz.clear();
         eventInstances.clear();

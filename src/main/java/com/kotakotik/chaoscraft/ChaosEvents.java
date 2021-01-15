@@ -51,7 +51,6 @@ public class ChaosEvents {
     }
 
     public static ChaosEvent getRandom() {
-        System.out.println(getAsList().size());
         int rnd = new Random().nextInt(getAsList().size());
         return getAsList().get(rnd);
     }

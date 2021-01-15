@@ -1,34 +1,38 @@
 package com.kotakotik.chaoscraft;
 
 
-import net.minecraft.client.Minecraft;
+import com.kotakotik.chaoscraft.networking.ModPacketHandler;
+import com.kotakotik.chaoscraft.networking.packets.PacketTimerRestart;
+import com.kotakotik.chaoscraft.networking.packets.PacketTimerSync;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 
 @Mod.EventBusSubscriber()
 public class ChaosEventHandler {
-    private static int ticksUntilNext = 0; // i know the name is wrong but im a lazy person yknow
+    private static int ticks = 0;
+    public static int ticksClient = 0;
 
     private static MinecraftServer Server;
 
+    public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
+        new PacketTimerSync(ticks).sendToClient((ServerPlayerEntity) event.getPlayer());
+    }
+
     @SubscribeEvent
     public static void onTick(TickEvent.ServerTickEvent event) {
-        if(event.phase == TickEvent.Phase.START) return; // only do this once per tick
+        if(event.phase == TickEvent.Phase.START) return;
         if(Server == null) return;
         // why am i making so many comments rn lol
 
         int ticksToNext = Config.SECONDS_FOR_EVENT.get() * 20;
 
-        ticksUntilNext++;
-        if(ticksUntilNext >= ticksToNext) {
+        ticks++;
+        if(ticks >= ticksToNext) {
             ChaosEvent randomEvent = ChaosEvents.getRandom();
 
             for (ServerPlayerEntity player : Server.getPlayerList().getPlayers()) {
@@ -39,31 +43,28 @@ public class ChaosEventHandler {
                     player.sendStatusMessage(TranslationKeys.EventStarted.getComponent(randomEvent.getTranslation()), false);
                 }
             }
+            // send packet to restart timer to all players
+            new PacketTimerRestart().sendToAllClients();
 
             randomEvent.start(Server);
 
-            ticksUntilNext = 0;
+            ticks = 0;
         }
     }
 
-//    @SubscribeEvent
-//    public static void onClientTick(TickEvent.ClientTickEvent event) {
-//        if(event.phase == TickEvent.Phase.START) return;
-//
-//        int ticksToNext = Config.SECONDS_FOR_EVENT.get() * 20;
-//
-//        ticksUntilNext++;
-//        if(ticksUntilNext >= ticksToNext) {
-//            ticksUntilNext = 0;
-//        }
-//    }
+    @SubscribeEvent
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
+        if(event.phase == TickEvent.Phase.START) return;
+        // who would have thought making a simple timer would be such a pain my god
+        ticksClient++;
+    }
 
     @SubscribeEvent
     public static void onServerStarted(FMLServerStartedEvent event) {
         Server = event.getServer();
     }
 
-    public static int getTicksUntilNext() {
-        return ticksUntilNext;
+    public static int getTicks() {
+        return ticks;
     }
 }
