@@ -4,6 +4,7 @@ package com.kotakotik.chaoscraft;
 import com.kotakotik.chaoscraft.networking.ModPacketHandler;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerRestart;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerSync;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.event.TickEvent;
@@ -55,6 +56,7 @@ public class ChaosEventHandler {
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if(event.phase == TickEvent.Phase.START) return;
+        if(Minecraft.getInstance().isGamePaused()) return;
         // who would have thought making a simple timer would be such a pain my god
         ticksClient++;
     }
