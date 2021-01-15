@@ -57,56 +57,34 @@ public class Chaos {
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
-        Field scanDataClassField = ObfuscationReflectionHelper.findField(ModFileScanData.ClassData.class, "clazz");
-
+        Type ann = Type.getType(ChaosEventRegister.class);
         LOGGER.info("finding events");
-        ModList.get().getAllScanData().forEach((mod) -> mod.getClasses().stream().filter((an) ->
-                {
-                    try {
-                        Type type = (Type) scanDataClassField.get(an);
-                        if(type.equals(Type.getType(GlobalEntityTypeAttributes.class))) return false;
-                        return ChaosEvent.class.isAssignableFrom(Class.forName(type.getClassName()));
-                    } catch (ExceptionInInitializerError | NoClassDefFoundError | Exception ignored) { // a bunch of errors probably from loading stuff i shouldnt load lol
-                        // hmm i wonder if ignoring that many exceptions will break anything hmmmmm
-                        // got a joke for you
-                        // running from the exceptions like i run from my problems
-                        // TODO: test the hell out of this because i have a feeling its gonna be really glitchy
-                    }
-                    return false;
-                }
-        ).forEach((ev) -> {
-            try {
-                Type type = (Type) scanDataClassField.get(ev);
-                Class<? extends ChaosEvent> eventClass = (Class<? extends ChaosEvent>) Class.forName(type.getClassName());
+        List<ModFileScanData.AnnotationData> events = new ArrayList<>();
+        // too lazy to stop using annotation and instead just use class.isAssignableFrom(...) on every class
+        ModList.get().getAllScanData().forEach((mod) -> mod.getAnnotations().stream().filter((an) -> (an.getAnnotationType().equals(ann))).forEach(events::add));
+        eventz.clear();
+        eventInstances.clear();
+        LOGGER.info("found " + events.size() + " events");
+        for (ModFileScanData.AnnotationData ev : events) {
+            Class<?> clazz = Class.forName(ev.getClassType().getClassName());
+            // i never liked the idea of getting classes using their name or file location or something like that,
+            // but i guess i have to do this :/
+//            Class<? extends ChaosEvent> eventClass = (Class<? extends ChaosEvent>) ;
+//            System.out.println(clazz.isAssignableFrom(ChaosEvent.class));
+            if(ChaosEvent.class.isAssignableFrom(clazz)) {
+                Class<? extends ChaosEvent> eventClass = (Class<? extends ChaosEvent>) clazz;
                 eventz.add(eventClass);
                 ChaosEvent eventInstance = eventClass.newInstance();
                 eventInstances.add(eventInstance);
                 LOGGER.info("registered event: " + eventInstance.getId() + " ("+eventClass.getName()+ ")");
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
+            } else {
+                LOGGER.info(ev.getClassType().getClassName() + " has event annotation but does not extend ChaosEvent");
             }
-        }));
+        }
         LOGGER.info("registered " + eventz.size() + " events");
         if(eventz.size() == 0) {
-            LOGGER.info("uh oh! we have 0 events, expect a crash soon after world start!");
+            LOGGER.info("uh oh! we have 0 events, expect a crash soon!");
         }
-//        eventz.clear();
-//        eventInstances.clear();
-//        LOGGER.info("found " + events.size() + " events");
-//        for (ModFileScanData.AnnotationData ev : events) {
-//            Class<?> clazz = Class.forName(ev.getClassType().getClassName());
-//            // i never liked the idea of getting classes using their name or file location or something like that,
-//            // but i guess i have to do this :/
-////            Class<? extends ChaosEvent> eventClass = (Class<? extends ChaosEvent>) ;
-////            System.out.println(clazz.isAssignableFrom(ChaosEvent.class));
-//            if(ChaosEvent.class.isAssignableFrom(clazz)) {
-//                Class<? extends ChaosEvent> eventClass = (Class<? extends ChaosEvent>) clazz;
-//                eventz.add(eventClass);
-//                eventInstances.add(eventClass.newInstance());
-//            } else {
-//                LOGGER.info(ev.getClassType().getClassName() + " has event annotation but does not extend ChaosEvent");
-//            }
-//        }
     }
 
     private void setup(final FMLCommonSetupEvent event) {

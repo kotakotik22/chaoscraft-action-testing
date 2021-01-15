@@ -1,6 +1,7 @@
 package com.kotakotik.chaoscraft.chaos_events;
 
 import com.kotakotik.chaoscraft.ChaosEvent;
+import com.kotakotik.chaoscraft.ChaosEventRegister;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@ChaosEventRegister
 public class EventOuttaThisWorld extends ChaosEvent {
     @Override
     public String getEnglish() {

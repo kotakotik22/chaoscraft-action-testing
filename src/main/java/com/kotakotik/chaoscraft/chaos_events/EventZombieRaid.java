@@ -1,6 +1,7 @@
 package com.kotakotik.chaoscraft.chaos_events;
 
 import com.kotakotik.chaoscraft.ChaosEvent;
+import com.kotakotik.chaoscraft.ChaosEventRegister;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.datasync.DataParameter;
@@ -10,6 +11,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import java.lang.reflect.Field;
 import java.util.Random;
 
+@ChaosEventRegister
 public class EventZombieRaid extends ChaosEvent {
     @Override
     public String getEnglish() {

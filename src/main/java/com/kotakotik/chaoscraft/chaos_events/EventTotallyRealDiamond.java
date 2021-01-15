@@ -1,6 +1,7 @@
 package com.kotakotik.chaoscraft.chaos_events;
 
 import com.kotakotik.chaoscraft.ChaosEvent;
+import com.kotakotik.chaoscraft.ChaosEventRegister;
 import com.kotakotik.chaoscraft.ModItems;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -8,6 +9,7 @@ import net.minecraft.server.MinecraftServer;
 
 import java.util.HashMap;
 
+@ChaosEventRegister
 public class EventTotallyRealDiamond extends ChaosEvent {
     @Override
     public String getEnglish() {

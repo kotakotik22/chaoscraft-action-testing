@@ -1,10 +1,12 @@
 package com.kotakotik.chaoscraft.chaos_events;
 
 import com.kotakotik.chaoscraft.ChaosEvent;
+import com.kotakotik.chaoscraft.ChaosEventRegister;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 
+@ChaosEventRegister
 public class EventCursedCraft extends ChaosEvent {
     @Override
     public String getEnglish() {

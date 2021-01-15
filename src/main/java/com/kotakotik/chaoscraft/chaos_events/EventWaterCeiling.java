@@ -1,12 +1,14 @@
 package com.kotakotik.chaoscraft.chaos_events;
 
 import com.kotakotik.chaoscraft.ChaosEvent;
+import com.kotakotik.chaoscraft.ChaosEventRegister;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+@ChaosEventRegister
 public class EventWaterCeiling extends ChaosEvent {
     @Override
     public String getEnglish() {
