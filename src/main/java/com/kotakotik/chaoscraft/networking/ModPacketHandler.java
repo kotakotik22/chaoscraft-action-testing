@@ -2,6 +2,7 @@ package com.kotakotik.chaoscraft.networking;
 
 import com.kotakotik.chaoscraft.Chaos;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerRestart;
+import com.kotakotik.chaoscraft.networking.packets.PacketTimerSet;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerSync;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -11,10 +12,8 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class ModPacketHandler {
     private static SimpleChannel INSTANCE;
@@ -59,7 +58,7 @@ public class ModPacketHandler {
             try {
                 return clazz.newInstance();
             } catch (InstantiationException | IllegalAccessException e) {
-                LogManager.getLogger().info("exception while registering packet " + clazz.getName());
+                LogManager.getLogger().info("exception while registering arg packet " + clazz.getName());
                 e.printStackTrace();
             }
             return null;
@@ -76,12 +75,14 @@ public class ModPacketHandler {
 
         register(PacketTimerRestart.class);
 
-        registerArg(PacketTimerSync.class);
+        registerArg(PacketTimerSet.class, (buf) -> new PacketTimerSet(buf.readInt()));
 //        INSTANCE.messageBuilder(PacketTimerRestart.class, nextID())
 //                .encoder((packetTimerRestart, packetBuffer) -> {})
 //                .decoder(buf -> new PacketTimerRestart())
 //                .consumer(PacketTimerRestart::handle)
 //                .add();
+
+        register(PacketTimerSync.class);
     }
 
     public static void sendToClient(Object packet, ServerPlayerEntity player) {

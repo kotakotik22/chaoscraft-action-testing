@@ -10,14 +10,16 @@ import java.util.function.Supplier;
 
 public abstract class ModPacket {
     public abstract boolean onReceived(Supplier<NetworkEvent.Context> ctx);
+    public boolean onReceivedServer(Supplier<NetworkEvent.Context> ctx) {return onReceived(ctx);}
+    public boolean onReceivedClient(Supplier<NetworkEvent.Context> ctx) {return onReceived(ctx);}
 
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
         ServerPlayerEntity sender = ctx.get().getSender();
         if(sender == null && canBeReceivedOnClient()) {
-            return onReceived(ctx);
+            return onReceivedClient(ctx);
         }
         if(sender != null && canBeReceivedOnServer()) {
-            return onReceived(ctx);
+            return onReceivedServer(ctx);
         }
         return false;
     }
