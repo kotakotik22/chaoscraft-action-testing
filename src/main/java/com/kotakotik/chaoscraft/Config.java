@@ -8,10 +8,12 @@ public class Config {
     public static ForgeConfigSpec SERVER_CONFIG;
 
     public static ForgeConfigSpec.IntValue SECONDS_FOR_EVENT;
+    public static ForgeConfigSpec.IntValue SECONDS_FOR_SYNC;
+    public static ForgeConfigSpec.BooleanValue AUTO_SYNC;
 
     public static ForgeConfigSpec.IntValue register(ForgeConfigSpec.Builder BUILDER, String name,
                                                     String description, int defauld /* clazz but for default lol */, int min, int max) {
-        return BUILDER.comment(description, "default: " + defauld)
+        return BUILDER.comment(description, "default: " + defauld, "type: int")
                 .defineInRange(name, defauld, min, max);
     }
 
@@ -27,7 +29,7 @@ public class Config {
 
     public static ForgeConfigSpec.BooleanValue register(ForgeConfigSpec.Builder BUILDER, String name,
                                                         String description, boolean defauld) {
-        return BUILDER.comment(description, "default: " + defauld)
+        return BUILDER.comment(description, "default: " + defauld, "type: bool")
                 .define(name, defauld);
     }
 
@@ -41,6 +43,20 @@ public class Config {
                 "secondsForEvent",
                 "How many seconds to wait before starting a new event",
                 30
+        );
+
+        SECONDS_FOR_SYNC = register(
+                SERVER_BUILDER,
+                "secondsForSync",
+                "How many seconds to wait before syncing the timer on client (only used if autoSync is enabled)",
+                20
+        );
+
+        AUTO_SYNC = register(
+                SERVER_BUILDER,
+                "autoSync",
+                "Whether to sync the timer on client, the seconds to sync is secondsForSync",
+                true
         );
 
         SERVER_BUILDER.pop();

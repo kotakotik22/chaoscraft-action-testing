@@ -56,7 +56,11 @@ public class ChaosEventHandler {
     }
 
     private static int ticksSinceLastUpdate = 0;
-    private final static int ticksToUpdate = 20 * 20; // sync ticks every 20 seconds
+//    private final static int ticksToUpdate = 20 * 20; // sync ticks every 20 seconds
+
+    public static int getTicksToUpdate() {
+        return Config.SECONDS_FOR_SYNC.get();
+    }
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
@@ -73,10 +77,12 @@ public class ChaosEventHandler {
         if(ticksClient < 0) {
             new PacketTimerSync().sendToServer();
         }
-        ticksSinceLastUpdate++;
-        if(ticksSinceLastUpdate >= ticksToUpdate) {
-            ticksSinceLastUpdate = 0;
-            new PacketTimerSync().sendToServer();
+        if(Config.AUTO_SYNC.get()) {
+            ticksSinceLastUpdate++;
+            if(ticksSinceLastUpdate >= getTicksToUpdate()) {
+                ticksSinceLastUpdate = 0;
+                new PacketTimerSync().sendToServer();
+            }
         }
     }
 
