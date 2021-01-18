@@ -1,6 +1,7 @@
 package com.kotakotik.chaoscraft;
 
 
+import com.kotakotik.chaoscraft.config.Config;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerRestart;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerSet;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerSync;

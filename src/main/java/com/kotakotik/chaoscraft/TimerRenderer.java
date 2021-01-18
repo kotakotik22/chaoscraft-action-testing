@@ -1,5 +1,6 @@
 package com.kotakotik.chaoscraft;
 
+import com.kotakotik.chaoscraft.config.Config;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;

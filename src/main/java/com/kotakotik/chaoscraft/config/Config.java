@@ -1,11 +1,15 @@
-package com.kotakotik.chaoscraft;
+package com.kotakotik.chaoscraft.config;
 
+import com.kotakotik.chaoscraft.Chaos;
+import com.kotakotik.chaoscraft.ChaosEvent;
+import com.kotakotik.chaoscraft.ChaosEventHandler;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public class Config {
@@ -41,6 +45,8 @@ public class Config {
     }
 
     public static HashMap<String, ForgeConfigSpec.BooleanValue> eventBooleans = new HashMap<>();
+    public static HashMap<String, ForgeConfigSpec.ConfigValue<?>> extraConfigs = new HashMap<>();
+
 
     static {
         ForgeConfigSpec.Builder SERVER_BUILDER = new ForgeConfigSpec.Builder();
@@ -86,7 +92,33 @@ public class Config {
 
             SERVER_BUILDER.comment("Extra config for the event").push("extra_config");
 
-            // Extra config coming (probably) in the next commit
+            List<ExtraEventConfig> extraConfig = event.getExtraConfig();
+
+            for(ExtraEventConfig conf : extraConfig) {
+                String confId = conf.getMapId();
+                switch (conf.type) {
+                    case INT:
+                        extraConfigs.put(confId,
+                                register(
+                                        SERVER_BUILDER,
+                                        conf.id,
+                                        conf.desc,
+                                        (int) conf.defauld,
+                                        conf.getMin(),
+                                        conf.getMax()
+                                ));
+                        break;
+                    case BOOL:
+                        extraConfigs.put(confId,
+                                register(
+                                        SERVER_BUILDER,
+                                        conf.id,
+                                        conf.desc,
+                                        (boolean) conf.defauld
+                                ));
+                        break;
+                }
+            }
 
             SERVER_BUILDER.pop();
 

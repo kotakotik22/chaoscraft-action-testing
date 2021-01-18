@@ -1,10 +1,14 @@
 package com.kotakotik.chaoscraft;
 
+import com.kotakotik.chaoscraft.config.ExtraEventConfig;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public abstract class ChaosEvent {
     public abstract String getEnglish();
@@ -32,6 +36,10 @@ public abstract class ChaosEvent {
         // https://github.com/kotakotik22/chaoscraft/wiki/Actually-real-diamond
         // ^ example of a link
         return getWikiFirst() + getEnglish().replaceAll(" ", "-").replaceAll(",", "%2C");
+    }
+
+    public List<ExtraEventConfig> getExtraConfig() {
+        return new ArrayList<>();
     }
 
     public String getWikiFirst() {
