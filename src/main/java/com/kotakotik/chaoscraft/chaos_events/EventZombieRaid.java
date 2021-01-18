@@ -34,10 +34,10 @@ public class EventZombieRaid extends ChaosEvent {
     @Override
     public void start(MinecraftServer server) {
         for(ServerPlayerEntity player : server.getPlayerList().getPlayers()) {
-            int toSpawn = ((ForgeConfigSpec.IntValue) ZOMBIES_TO_SPAWN.getConfigValue()).get();
+            int toSpawn = ZOMBIES_TO_SPAWN.getIntConfigValue().get();
             for(int i = 0; i < toSpawn; i++) {
                 boolean spawnBaby = new Random().nextBoolean();
-                if(!((ForgeConfigSpec.BooleanValue) SPAWN_BABY_ZOMBIES.getConfigValue()).get()) {
+                if(!SPAWN_BABY_ZOMBIES.getBoolConfigValue().get()) {
                     spawnBaby = false;
                 }
                 ZombieEntity zombieEntity = new ZombieEntity(player.world);

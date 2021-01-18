@@ -66,6 +66,14 @@ public class ExtraEventConfig {
         return Config.extraConfigs.get(getMapId());
     }
 
+    public ForgeConfigSpec.IntValue getIntConfigValue() {
+        return (ForgeConfigSpec.IntValue) getConfigValue();
+    }
+
+    public ForgeConfigSpec.BooleanValue getBoolConfigValue() {
+        return (ForgeConfigSpec.BooleanValue) getConfigValue();
+    }
+
     public String getMapId() {
         return getIdFor(id, event.getId());
     }

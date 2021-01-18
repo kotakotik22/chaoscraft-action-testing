@@ -40,7 +40,7 @@ public class Config {
 
     public static ForgeConfigSpec.BooleanValue register(ForgeConfigSpec.Builder BUILDER, String name,
                                                         String description, boolean defauld) {
-        return BUILDER.comment(description, "default: " + defauld, "type: bool")
+        return BUILDER.comment(description, "default: " + defauld, "type: bool (true/false)")
                 .define(name, defauld);
     }
 

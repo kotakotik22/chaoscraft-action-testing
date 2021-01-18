@@ -17,5 +17,6 @@ public class DataGenerators {
         generator.addProvider(new ChaosEventTranslationGeneration(generator, Chaos.MODID, "en_us"));
 //        generator.addProvider(new RussianTranslations(generator, XYKey.MODID, "ru_ru"));
         // the generator doesnt work at all with cyrillic
+        // lol i forgot i stole this datagen piece from XYKey
     }
 }
