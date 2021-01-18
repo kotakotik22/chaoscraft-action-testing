@@ -1,9 +1,16 @@
 package com.kotakotik.chaoscraft;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 
+import java.util.HashMap;
+
+@Mod.EventBusSubscriber
 public class Config {
     public static final String CATEGORY_GENERAL = "general";
+    public static final String CATEGORY_EVENTS = "events";
 
     public static ForgeConfigSpec SERVER_CONFIG;
 
@@ -33,6 +40,8 @@ public class Config {
                 .define(name, defauld);
     }
 
+    public static HashMap<String, ForgeConfigSpec.BooleanValue> eventBooleans = new HashMap<>();
+
     static {
         ForgeConfigSpec.Builder SERVER_BUILDER = new ForgeConfigSpec.Builder();
 
@@ -61,6 +70,58 @@ public class Config {
 
         SERVER_BUILDER.pop();
 
+        SERVER_BUILDER.comment("Event settings").push(CATEGORY_EVENTS);
+
+        for(ChaosEvent event : Chaos.eventInstances) {
+            SERVER_BUILDER.comment(event.getEnglish(), event.getWikiPage()).push(event.getId());
+
+            if(event.hasOnOffConfig()) {
+                eventBooleans.put(event.getId(), register(
+                        SERVER_BUILDER,
+                        "enabled",
+                        "Whether " + event.getId() + " is enabled",
+                        event.isEnabledOnDefault()
+                ));
+            }
+
+            SERVER_BUILDER.comment("Extra config for the event").push("extra_config");
+
+            // Extra config coming (probably) in the next commit
+
+            SERVER_BUILDER.pop();
+
+            SERVER_BUILDER.pop();
+        }
+
+        SERVER_BUILDER.pop();
+
         SERVER_CONFIG = SERVER_BUILDER.build();
+    }
+
+    public static ForgeConfigSpec.BooleanValue getEventBool(String id) {
+        return eventBooleans.get(id);
+    }
+
+    public static HashMap<String, ForgeConfigSpec.BooleanValue> getEventBooleans() {
+        return eventBooleans;
+    }
+
+    public static boolean getIsEventEnabled(String id) {
+        return getEventBool(id).get();
+    }
+
+    public static boolean getIsEventEnabled(ChaosEvent event) {
+        return getIsEventEnabled(event.getId());
+    }
+
+    @SubscribeEvent
+    public static void onLoad(final ModConfig.Loading configEvent) {
+        ChaosEventHandler.updateEnabledEvents();
+    }
+
+    @SubscribeEvent
+    public static void onReload(final ModConfig.Reloading configEvent) {
+        ChaosEventHandler.updateEnabledEvents();
+
     }
 }

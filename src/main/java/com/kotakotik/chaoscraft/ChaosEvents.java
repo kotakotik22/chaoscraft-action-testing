@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class ChaosEvents {
     // not used anymore!
@@ -51,7 +52,11 @@ public class ChaosEvents {
     }
 
     public static ChaosEvent getRandom() {
-        int rnd = new Random().nextInt(getAsList().size());
-        return getAsList().get(rnd);
+       return getRandom(getAsList());
+    }
+
+    public static ChaosEvent getRandom(List<ChaosEvent> events) {
+        int rnd = new Random().nextInt(events.size());
+        return events.get(rnd);
     }
 }

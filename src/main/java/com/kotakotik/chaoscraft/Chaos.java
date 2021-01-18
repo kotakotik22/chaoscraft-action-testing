@@ -42,7 +42,7 @@ public class Chaos {
     public static final String MODID = "chaoscraft";
     public static final String ChaosNamePrefix = "chaoscraft.event.";
 
-    public Chaos() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public Chaos() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the enqueueIMC method for modloading
@@ -52,6 +52,8 @@ public class Chaos {
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
+        registerEvents();
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
 
         Registration.register();
@@ -60,7 +62,9 @@ public class Chaos {
         MinecraftForge.EVENT_BUS.register(this);
 
         ModPacketHandler.registerMessages();
+    }
 
+    public static void registerEvents() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         Type ann = Type.getType(ChaosEventRegister.class);
         LOGGER.info("finding events");
         List<ModFileScanData.AnnotationData> events = new ArrayList<>();

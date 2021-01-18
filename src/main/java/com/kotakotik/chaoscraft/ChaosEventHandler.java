@@ -7,23 +7,46 @@ import com.kotakotik.chaoscraft.networking.packets.PacketTimerSync;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Mod.EventBusSubscriber()
 public class ChaosEventHandler {
     private static int ticks = 0;
     public static int ticksClient = 0;
 
+    private static List<ChaosEvent> enabledEvents = new ArrayList<>();
+
     private static MinecraftServer Server;
 
     @SubscribeEvent // i am literally so stupid i forgot to put the @SubscribeEvent here lmao
     public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
         new PacketTimerSet(ticks).sendToClient((ServerPlayerEntity) event.getPlayer());
+    }
+
+    public static List<ChaosEvent> getEnabledEvents() {
+        return enabledEvents;
+    }
+
+    public static List<ChaosEvent> updateEnabledEvents() {
+        List<ChaosEvent> tempEnabledEvents = new ArrayList<>();
+        HashMap<String, ForgeConfigSpec.BooleanValue> vals = Config.getEventBooleans();
+        for(String id : vals.keySet()) {
+            ForgeConfigSpec.BooleanValue val = vals.get(id);
+            if(val.get()) {
+                tempEnabledEvents.add(ChaosEvents.getAsMap().get(id));
+            }
+        }
+        enabledEvents = tempEnabledEvents;
+        return enabledEvents;
     }
 
     @SubscribeEvent
@@ -36,7 +59,7 @@ public class ChaosEventHandler {
 
         ticks++;
         if(ticks >= ticksToNext) {
-            ChaosEvent randomEvent = ChaosEvents.getRandom();
+            ChaosEvent randomEvent = ChaosEvents.getRandom(enabledEvents);
 
             for (ServerPlayerEntity player : Server.getPlayerList().getPlayers()) {
                 if(randomEvent instanceof ChaosEventTimed) {
@@ -89,6 +112,7 @@ public class ChaosEventHandler {
     @SubscribeEvent
     public static void onServerStarted(FMLServerStartedEvent event) {
         Server = event.getServer();
+        updateEnabledEvents();
     }
 
     public static int getTicks() {

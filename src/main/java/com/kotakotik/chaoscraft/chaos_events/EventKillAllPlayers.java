@@ -35,4 +35,9 @@ public class EventKillAllPlayers extends ChaosEvent {
 
         return map;
     }
+
+    @Override
+    public boolean isEnabledOnDefault() {
+        return false;
+    }
 }
