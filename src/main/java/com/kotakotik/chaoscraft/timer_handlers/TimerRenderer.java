@@ -1,5 +1,6 @@
-package com.kotakotik.chaoscraft;
+package com.kotakotik.chaoscraft.timer_handlers;
 
+import com.kotakotik.chaoscraft.TranslationKeys;
 import com.kotakotik.chaoscraft.chaos_handlers.ChaosEventHandler;
 import com.kotakotik.chaoscraft.config.Config;
 import com.mojang.blaze3d.systems.RenderSystem;
