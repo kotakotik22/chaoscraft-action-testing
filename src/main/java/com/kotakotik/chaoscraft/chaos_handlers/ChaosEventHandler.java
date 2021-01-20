@@ -22,7 +22,7 @@ import java.util.List;
 
 @Mod.EventBusSubscriber()
 public class ChaosEventHandler {
-    private static int ticks = 0;
+    public static int ticks = 0;
     public static int ticksClient = 0;
 
     private static List<ChaosEvent> enabledEvents = new ArrayList<>();

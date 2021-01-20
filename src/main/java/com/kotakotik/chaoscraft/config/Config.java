@@ -21,6 +21,8 @@ public class Config {
     public static ForgeConfigSpec.IntValue SECONDS_FOR_EVENT;
     public static ForgeConfigSpec.IntValue SECONDS_FOR_SYNC;
     public static ForgeConfigSpec.BooleanValue AUTO_SYNC;
+    public static ForgeConfigSpec.IntValue SECONDS_FOR_SAVE;
+    public static ForgeConfigSpec.BooleanValue SAVE_TIMER;
 
     public static ForgeConfigSpec.IntValue register(ForgeConfigSpec.Builder BUILDER, String name,
                                                     String description, int defauld /* clazz but for default lol */, int min, int max) {
@@ -73,6 +75,20 @@ public class Config {
                 "Whether to sync the timer on client, the seconds to sync is secondsForSync",
                 true
         );
+
+       SECONDS_FOR_SAVE = register(
+               SERVER_BUILDER,
+               "secondsForSave",
+               "How many seconds to wait before saving the time left until the next event (only used if saveTimer is enabled)",
+               5
+       );
+
+       SAVE_TIMER = register(
+               SERVER_BUILDER,
+               "saveTimer",
+               "Whether to save the time left until the next event",
+               true
+       );
 
         SERVER_BUILDER.pop();
 
