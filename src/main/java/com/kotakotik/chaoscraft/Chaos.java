@@ -82,7 +82,7 @@ public class Chaos {
                 eventInstances.add(eventInstance);
                 LOGGER.info("registered event: " + eventInstance.getId() + " ("+eventClass.getName()+ ")");
             } else {
-                LOGGER.info(ev.getClassType().getClassName() + " has event annotation but does not extend ChaosEvent");
+                LOGGER.warn(ev.getClassType().getClassName() + " has event annotation but does not extend ChaosEvent");
             }
         }
         LOGGER.info("registered " + eventz.size() + " events");
