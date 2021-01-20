@@ -1,7 +1,7 @@
 package com.kotakotik.chaoscraft.chaos_events;
 
-import com.kotakotik.chaoscraft.ChaosEvent;
-import com.kotakotik.chaoscraft.ChaosEventRegister;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvent;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEventRegister;
 import com.kotakotik.chaoscraft.config.ExtraEventConfig;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.CreeperEntity;

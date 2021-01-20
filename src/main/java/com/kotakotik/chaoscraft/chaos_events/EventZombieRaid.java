@@ -1,14 +1,12 @@
 package com.kotakotik.chaoscraft.chaos_events;
 
-import com.kotakotik.chaoscraft.ChaosEvent;
-import com.kotakotik.chaoscraft.ChaosEventRegister;
-import com.kotakotik.chaoscraft.config.Config;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvent;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEventRegister;
 import com.kotakotik.chaoscraft.config.ExtraEventConfig;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.lang.reflect.Field;

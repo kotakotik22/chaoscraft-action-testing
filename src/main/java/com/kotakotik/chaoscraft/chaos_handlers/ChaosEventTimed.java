@@ -1,6 +1,4 @@
-package com.kotakotik.chaoscraft;
-
-import net.minecraft.world.World;
+package com.kotakotik.chaoscraft.chaos_handlers;
 
 public abstract class ChaosEventTimed extends ChaosEvent {
     public abstract int getDuration();

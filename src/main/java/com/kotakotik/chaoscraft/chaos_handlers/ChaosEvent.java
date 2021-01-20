@@ -1,5 +1,7 @@
-package com.kotakotik.chaoscraft;
+package com.kotakotik.chaoscraft.chaos_handlers;
 
+import com.kotakotik.chaoscraft.Chaos;
+import com.kotakotik.chaoscraft.Translation;
 import com.kotakotik.chaoscraft.config.ExtraEventConfig;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;

@@ -1,6 +1,7 @@
-package com.kotakotik.chaoscraft;
+package com.kotakotik.chaoscraft.chaos_handlers;
 
 
+import com.kotakotik.chaoscraft.TranslationKeys;
 import com.kotakotik.chaoscraft.config.Config;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerRestart;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerSet;

@@ -1,6 +1,6 @@
 package com.kotakotik.chaoscraft.config;
 
-import com.kotakotik.chaoscraft.ChaosEvent;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ExtraEventConfig {

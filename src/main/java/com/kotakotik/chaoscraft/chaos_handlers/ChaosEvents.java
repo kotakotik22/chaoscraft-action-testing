@@ -1,12 +1,10 @@
-package com.kotakotik.chaoscraft;
+package com.kotakotik.chaoscraft.chaos_handlers;
 
-import com.kotakotik.chaoscraft.chaos_events.*;
+import com.kotakotik.chaoscraft.Chaos;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class ChaosEvents {
     // not used anymore!

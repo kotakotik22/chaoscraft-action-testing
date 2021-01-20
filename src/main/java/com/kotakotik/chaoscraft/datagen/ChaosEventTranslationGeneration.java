@@ -1,8 +1,7 @@
 package com.kotakotik.chaoscraft.datagen;
 
-import com.kotakotik.chaoscraft.Chaos;
-import com.kotakotik.chaoscraft.ChaosEvent;
-import com.kotakotik.chaoscraft.ChaosEvents;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvent;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvents;
 import com.kotakotik.chaoscraft.TranslationKeys;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;

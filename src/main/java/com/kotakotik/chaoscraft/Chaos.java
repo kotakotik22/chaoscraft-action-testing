@@ -1,5 +1,7 @@
 package com.kotakotik.chaoscraft;
 
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvent;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEventRegister;
 import com.kotakotik.chaoscraft.config.Config;
 import com.kotakotik.chaoscraft.networking.ModPacketHandler;
 import net.minecraft.block.Block;

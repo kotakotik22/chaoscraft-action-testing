@@ -1,6 +1,6 @@
 package com.kotakotik.chaoscraft.networking.packets;
 
-import com.kotakotik.chaoscraft.ChaosEventHandler;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEventHandler;
 import com.kotakotik.chaoscraft.networking.ModPacket;
 import net.minecraftforge.fml.network.NetworkEvent;
 
