@@ -27,7 +27,7 @@ public abstract class ChaosEvent {
 
     public boolean hasOnOffConfig() {
         return true;
-    }
+    } // TODO: currently, if the return value is false, the config will ALWAYS be disabled, to be fixed!
 
     public boolean isEnabledOnDefault() {
         return true;
@@ -37,7 +37,7 @@ public abstract class ChaosEvent {
     public String getWikiPage() {
         // https://github.com/kotakotik22/chaoscraft/wiki/Actually-real-diamond
         // ^ example of a link
-        return getWikiFirst() + getEnglish().replaceAll(" ", "-").replaceAll(",", "%2C");
+        return getWikiFirst() + wikiReplace(getEnglish());
     }
 
     public List<ExtraEventConfig> getExtraConfig() {
@@ -50,5 +50,32 @@ public abstract class ChaosEvent {
 
     public HashMap<String, String> getExtraTranslations() {
         return new HashMap<>();
+    }
+
+    /**
+     * what to replace in the second part of the wiki link, the argument is only there to make it easier
+     * to override, so the subclass can just override this method, put the things in the map that they want
+     * and then return super.getWikiReplace(map) which will add all of the default strings and
+     * all of the string they added, for cleaner code i recommend using {@link #getWikiPageReplace() getWikiPageReplace(no arguments)}
+    */
+    public HashMap<String, String> getWikiPageReplace(HashMap<String, String> map) {
+        map.put(" ", "-");
+        map.put(",", "%2C");
+        map.put("!", "");
+        return map;
+    }
+
+    public HashMap<String, String> getWikiPageReplace() {
+        return getWikiPageReplace(new HashMap<>());
+    }
+
+    private String wikiReplace(String original) {
+        String temp = original;
+        HashMap<String, String> toReplace = getWikiPageReplace();
+        for(String key : toReplace.keySet()) {
+            String val = toReplace.get(key);
+            temp = temp.replaceAll(key, val);
+        }
+        return temp;
     }
 }
