@@ -27,7 +27,7 @@ public abstract class ChaosEvent {
 
     public boolean hasOnOffConfig() {
         return true;
-    } // TODO: currently, if the return value is false, the config will ALWAYS be disabled, to be fixed!
+    } // fixed: currently, if the return value is false, the config will ALWAYS be disabled, to be fixed!
 
     public boolean isEnabledOnDefault() {
         return true;

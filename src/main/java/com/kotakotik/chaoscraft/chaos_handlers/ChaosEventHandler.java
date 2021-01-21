@@ -15,10 +15,12 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Mod.EventBusSubscriber()
 public class ChaosEventHandler {
@@ -41,13 +43,25 @@ public class ChaosEventHandler {
     public static List<ChaosEvent> updateEnabledEvents() {
         List<ChaosEvent> tempEnabledEvents = new ArrayList<>();
         HashMap<String, ForgeConfigSpec.BooleanValue> vals = Config.getEventBooleans();
-        for(String id : vals.keySet()) {
-            ForgeConfigSpec.BooleanValue val = vals.get(id);
-            if(val.get()) {
-                tempEnabledEvents.add(ChaosEvents.getAsMap().get(id));
+        HashMap<String, ChaosEvent> events = ChaosEvents.getAsMap();
+        for(String id : events.keySet()) {
+            ChaosEvent event = events.get(id);
+           boolean val = false;
+           if(vals.containsKey(id)) {
+               val = vals.get(id).get();
+           }
+            if( val || (/* handler for events without on/off config */!vals.containsKey(id) && event.isEnabledOnDefault())) {
+                tempEnabledEvents.add(events.get(id));
             }
         }
         enabledEvents = tempEnabledEvents;
+        LogManager.getLogger().info(
+                String.format(
+                        "enabled events updated, number of enabled events: %d. number of disabled events: %d (does not include events that cannot be turned off or on)",
+                        enabledEvents.size(),
+                        events.size() - enabledEvents.size()
+                )
+        );
         return enabledEvents;
     }
 
