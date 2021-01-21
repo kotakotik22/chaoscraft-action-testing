@@ -28,7 +28,7 @@ public class TimerSaveHandler {
         if(ticks >= Config.SECONDS_FOR_SAVE.get() * 20) {
             ChaoscraftWorldData data = getData();
             ticks = 0;
-            setTimer(data, ChaosEventHandler.getTicks());
+            data.setChaosTicks(ChaosEventHandler.getTicks());
         }
     }
 
@@ -36,23 +36,11 @@ public class TimerSaveHandler {
         return ChaoscraftWorldData.get(Server);
     }
 
-    private static int getTimer(ChaoscraftWorldData data) {
-        CompoundNBT nbt = data.serializeNBT();
-        return nbt.getInt(ChaoscraftWorldData.chaosTicksKey);
-    }
-
-    private static void setTimer(ChaoscraftWorldData data, int toSet) {
-        CompoundNBT nbt = data.serializeNBT();
-        nbt.putInt(ChaoscraftWorldData.chaosTicksKey, toSet);
-        data.deserializeNBT(nbt);
-        data.markDirty();
-    }
-
     @SubscribeEvent
     public static void onServerStarted(FMLServerStartedEvent event) {
         Server = event.getServer();
         ChaoscraftWorldData data = getData();
-        int ticks2 = getTimer(data);
+        int ticks2 = data.getChaosTicks();
         if(ticks2 > Config.SECONDS_FOR_EVENT.get() * 20 || !Config.SAVE_TIMER.get()) return;
         ChaosEventHandler.ticks = ticks2;
     }
