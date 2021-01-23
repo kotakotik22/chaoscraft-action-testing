@@ -2,6 +2,7 @@ package com.kotakotik.chaoscraft.chaos_handlers;
 
 import com.kotakotik.chaoscraft.Chaos;
 import com.kotakotik.chaoscraft.Translation;
+import com.kotakotik.chaoscraft.config.Config;
 import com.kotakotik.chaoscraft.config.ExtraEventConfig;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
@@ -27,7 +28,7 @@ public abstract class ChaosEvent {
 
     public boolean hasOnOffConfig() {
         return true;
-    } // fixed: if the return value is false, the config will ALWAYS be disabled, to be fixed!
+    }
 
     public boolean isEnabledOnDefault() {
         return true;
@@ -50,6 +51,10 @@ public abstract class ChaosEvent {
 
     public HashMap<String, String> getExtraTranslations() {
         return new HashMap<>();
+    }
+
+    public ForgeConfigSpec.BooleanValue getEnabledConfig() {
+        return Config.eventBooleans.get(getId());
     }
 
     /**

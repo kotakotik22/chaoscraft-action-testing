@@ -1,12 +1,15 @@
 package com.kotakotik.chaoscraft.commands;
 
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvent;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEventHandler;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvents;
 import com.kotakotik.chaoscraft.config.CType;
 import com.kotakotik.chaoscraft.config.Config;
+import com.kotakotik.chaoscraft.config.ExtraEventConfig;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -24,6 +27,7 @@ public class CommandChaosCraftConfig extends ChaosCraftCommand {
         LiteralArgumentBuilder<CommandSource> command = Commands.literal("config");
         command.requires(cs -> cs.hasPermissionLevel(2));
         command.then(new GeneralConfig().register(dispatcher));
+        command.then(new EventConfig().register(dispatcher));
         return command;
     }
 
@@ -36,6 +40,9 @@ public class CommandChaosCraftConfig extends ChaosCraftCommand {
 
         public abstract String getDescription();
         public abstract String getName();
+        public String getCommandName() {
+            return getName();
+        }
         public abstract CType getType();
         public abstract ForgeConfigSpec.ConfigValue getConfigValue();
         public abstract String getDefault();
@@ -51,7 +58,7 @@ public class CommandChaosCraftConfig extends ChaosCraftCommand {
 
         @Override
         public ArgumentBuilder<CommandSource, ?> register(CommandDispatcher<CommandSource> dispatcher) {
-            LiteralArgumentBuilder<CommandSource> command = Commands.literal(getName());
+            LiteralArgumentBuilder<CommandSource> command = Commands.literal(getCommandName());
 
             command.requires(cs -> cs.hasPermissionLevel(2));
 
@@ -96,19 +103,109 @@ public class CommandChaosCraftConfig extends ChaosCraftCommand {
         }
     }
 
+    public static class EventConfig extends ChaosCraftCommand {
+        @Override
+        public ArgumentBuilder<CommandSource, ?> register(CommandDispatcher<CommandSource> dispatcher) {
+            LiteralArgumentBuilder<CommandSource> command = Commands.literal("events");
+            command.requires(cs -> cs.hasPermissionLevel(2));
+            for(String key : Config.eventBooleans.keySet()) {
+                ForgeConfigSpec.BooleanValue val = Config.eventBooleans.get(key);
+                ChaosEvent event = ChaosEvents.getAsMap().get(key);
+                LiteralArgumentBuilder<CommandSource> eventCommand = Commands.literal(event.getId());
+                eventCommand.then(new EventEnabledConfig(event).register(dispatcher));
+                command.then(eventCommand);
+            }
+            return command;
+        }
+
+        public static class EventExtraConfig extends ConfigSetter<ExtraEventConfig> {
+            public EventExtraConfig(ExtraEventConfig info) {
+                super(info);
+            }
+
+            @Override
+            public String getDescription() {
+                return info.desc;
+            }
+
+            @Override
+            public String getName() {
+                return info.id;
+            }
+
+            @Override
+            public CType getType() {
+                return info.type;
+            }
+
+            @Override
+            public ForgeConfigSpec.ConfigValue getConfigValue() {
+                return info.getConfigValue();
+            }
+
+            @Override
+            public String getDefault() {
+                return (String) info.defauld;
+            }
+        }
+
+        public static class EventEnabledConfig extends ConfigSetter<ChaosEvent> {
+            public EventEnabledConfig(ChaosEvent info) {
+                super(info);
+            }
+
+            @Override
+            public String getDescription() {
+                return MessageFormat.format("Whether event {0} is enabled", info.getEnglish());
+            }
+
+            @Override
+            public String getName() {
+                return info.getId() + "." + getCommandName();
+            }
+
+            @Override
+            public String getCommandName() {
+                return "is_enabled";
+            }
+
+            @Override
+            public CType getType() {
+                return CType.BOOL;
+            }
+
+            @Override
+            public ForgeConfigSpec.ConfigValue getConfigValue() {
+                return info.getEnabledConfig();
+            }
+
+            @Override
+            public String getDefault() {
+                return String.valueOf(info.isEnabledOnDefault());
+            }
+
+            @Override
+            public int setValue(CommandContext<CommandSource> ctx) {
+                int toRet =  super.setValue(ctx);
+                ChaosEventHandler.updateEnabledEvents();
+                return toRet;
+            }
+        }
+    }
+
     public static class GeneralConfig extends ChaosCraftCommand {
         @Override
         public ArgumentBuilder<CommandSource, ?> register(CommandDispatcher<CommandSource> dispatcher) {
             LiteralArgumentBuilder<CommandSource> command = Commands.literal("general");
             command.requires(cs -> cs.hasPermissionLevel(2));
             for(Config.ConfigInfo info : Config.registeredConfig) {
-                command.then(new EachConfig(info).register(dispatcher));
+                command.then(new GeneralEachConfig(info).register(dispatcher));
             }
             return command;
         }
 
-        public static class EachConfig extends ConfigSetter<Config.ConfigInfo> {
-            public EachConfig(Config.ConfigInfo info) {
+        public static class GeneralEachConfig extends ConfigSetter<Config.ConfigInfo> {
+            public GeneralEachConfig(Config.ConfigInfo info) {
                 super(info);
             }
 
