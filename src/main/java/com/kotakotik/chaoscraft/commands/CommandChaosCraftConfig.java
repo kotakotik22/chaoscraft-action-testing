@@ -133,6 +133,11 @@ public class CommandChaosCraftConfig extends ChaosCraftCommand {
 
             @Override
             public String getName() {
+                return info.event.getId() + "." + getCommandName();
+            }
+
+            @Override
+            public String getCommandName() {
                 return info.id;
             }
 
