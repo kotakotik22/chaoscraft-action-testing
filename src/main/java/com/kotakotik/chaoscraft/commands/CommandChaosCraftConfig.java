@@ -113,6 +113,9 @@ public class CommandChaosCraftConfig extends ChaosCraftCommand {
                 ChaosEvent event = ChaosEvents.getAsMap().get(key);
                 LiteralArgumentBuilder<CommandSource> eventCommand = Commands.literal(event.getId());
                 eventCommand.then(new EventEnabledConfig(event).register(dispatcher));
+                for(ExtraEventConfig extraEventConfig : event.getExtraConfig()) {
+                    eventCommand.then(new EventExtraConfig(extraEventConfig).register(dispatcher));
+                }
                 command.then(eventCommand);
             }
             return command;
