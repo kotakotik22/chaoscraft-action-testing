@@ -4,10 +4,6 @@ import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ExtraEventConfig {
-    public static enum CType {
-        INT,
-        BOOL
-    }
     public final CType type;
     public final Object defauld;
     private int min;

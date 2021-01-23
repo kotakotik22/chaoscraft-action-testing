@@ -8,6 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,26 +25,82 @@ public class Config {
     public static ForgeConfigSpec.IntValue SECONDS_FOR_SAVE;
     public static ForgeConfigSpec.BooleanValue SAVE_TIMER;
 
+    public static class ConfigInfo {
+        public final Object defauld;
+        private int min;
+        private int max;
+        public final String name;
+        public final String desc;
+        public final ForgeConfigSpec.Builder builder;
+        public final ForgeConfigSpec.ConfigValue configValue;
+        public final CType type;
+
+        public ConfigInfo(ForgeConfigSpec.Builder BUILDER, String name,
+                          String description, int defauld, int min, int max, ForgeConfigSpec.IntValue configValue, CType type) {
+            this.min = min;
+            this.max = max;
+            this.defauld = defauld;
+            this.name = name;
+            desc = description;
+            this.builder = BUILDER;
+            this.configValue = configValue;
+            this.type = type;
+        }
+
+        public ConfigInfo(ForgeConfigSpec.Builder BUILDER, String name,
+                          String description, boolean defauld, ForgeConfigSpec.BooleanValue configValue, CType type) {
+            this.defauld = defauld;
+            this.name = name;
+            desc = description;
+            this.builder = BUILDER;
+            this.configValue = configValue;
+            this.type = type;
+        }
+
+        public void register() {
+            registeredConfig.add(this);
+        }
+
+        public int getMin() {
+            return min;
+        }
+
+        public int getMax() {
+            return max;
+        }
+    }
+
+    public static List<ConfigInfo> registeredConfig = new ArrayList<>();
+
     public static ForgeConfigSpec.IntValue register(ForgeConfigSpec.Builder BUILDER, String name,
-                                                    String description, int defauld /* clazz but for default lol */, int min, int max) {
-        return BUILDER.comment(description, "default: " + defauld, "type: int")
+                                                    String description, int defauld /* clazz but for default lol */, int min, int max,
+                                                    boolean addCommand) {
+        ForgeConfigSpec.IntValue configValue = BUILDER.comment(description, "default: " + defauld, "type: int")
                 .defineInRange(name, defauld, min, max);
+        if(addCommand) {
+            new ConfigInfo(BUILDER, name, description, defauld, min, max, configValue, CType.INT).register();
+        }
+        return configValue;
     }
 
     public static ForgeConfigSpec.IntValue register(ForgeConfigSpec.Builder BUILDER, String name,
-                                                    String description, int defauld, int min) {
-        return register(BUILDER, name, description, defauld, min, Integer.MAX_VALUE);
+                                                    String description, int defauld, int min, boolean addCommand) {
+        return register(BUILDER, name, description, defauld, min, Integer.MAX_VALUE, addCommand);
     }
 
     public static ForgeConfigSpec.IntValue register(ForgeConfigSpec.Builder BUILDER, String name,
-                                                    String description, int defauld) {
-        return register(BUILDER, name, description, defauld, 1);
+                                                    String description, int defauld, boolean addCommand) {
+        return register(BUILDER, name, description, defauld, 1, addCommand);
     }
 
     public static ForgeConfigSpec.BooleanValue register(ForgeConfigSpec.Builder BUILDER, String name,
-                                                        String description, boolean defauld) {
-        return BUILDER.comment(description, "default: " + defauld, "type: bool (true/false)")
+                                                        String description, boolean defauld, boolean addCommand) {
+        ForgeConfigSpec.BooleanValue configValue = BUILDER.comment(description, "default: " + defauld, "type: bool (true/false)")
                 .define(name, defauld);
+        if(addCommand) {
+            new ConfigInfo(BUILDER, name, description, defauld, configValue, CType.BOOL).register();
+        }
+        return configValue;
     }
 
     public static HashMap<String, ForgeConfigSpec.BooleanValue> eventBooleans = new HashMap<>();
@@ -59,20 +116,23 @@ public class Config {
                 SERVER_BUILDER,
                 "secondsForEvent",
                 "How many seconds to wait before starting a new event",
-                30
+                30,
+                true
         );
 
         SECONDS_FOR_SYNC = register(
                 SERVER_BUILDER,
                 "secondsForSync",
                 "How many seconds to wait before syncing the timer on client (only used if autoSync is enabled)",
-                20
+                20,
+                true
         );
 
         AUTO_SYNC = register(
                 SERVER_BUILDER,
                 "autoSync",
                 "Whether to sync the timer on client, the seconds to sync is secondsForSync",
+                true,
                 true
         );
 
@@ -80,13 +140,15 @@ public class Config {
                SERVER_BUILDER,
                "secondsForSave",
                "How many seconds to wait before saving the time left until the next event (only used if saveTimer is enabled)",
-               5
+               5,
+               true
        );
 
        SAVE_TIMER = register(
                SERVER_BUILDER,
                "saveTimer",
                "Whether to save the time left until the next event",
+               true,
                true
        );
 
@@ -102,7 +164,8 @@ public class Config {
                         SERVER_BUILDER,
                         "enabled",
                         "Whether " + event.getId() + " is enabled",
-                        event.isEnabledOnDefault()
+                        event.isEnabledOnDefault(),
+                        false
                 ));
             }
 
@@ -121,7 +184,8 @@ public class Config {
                                         conf.desc,
                                         (int) conf.defauld,
                                         conf.getMin(),
-                                        conf.getMax()
+                                        conf.getMax(),
+                                        false
                                 ));
                         break;
                     case BOOL:
@@ -130,7 +194,8 @@ public class Config {
                                         SERVER_BUILDER,
                                         conf.id,
                                         conf.desc,
-                                        (boolean) conf.defauld
+                                        (boolean) conf.defauld,
+                                        false
                                 ));
                         break;
                 }
