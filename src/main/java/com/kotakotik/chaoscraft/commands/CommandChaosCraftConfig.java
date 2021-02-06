@@ -52,8 +52,12 @@ public class CommandChaosCraftConfig extends ChaosCraftCommand {
         }
 
         public ITextComponent getInfoMessage(CommandContext<CommandSource> context, Object val) {
-            return new StringTextComponent("value of " + getName() + " is " + val + "\ndefault value: " + getDefault()
-                    + "\ndescription: " + getDescription());
+            try {
+                return new StringTextComponent(String.format("value of %s is %s\ndefault value: %s\ndescription: %s", getName(), String.valueOf(val), getDefault(), getDescription()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return new StringTextComponent("error");
         }
 
         @Override
@@ -74,7 +78,7 @@ public class CommandChaosCraftConfig extends ChaosCraftCommand {
                     throw new IllegalStateException("Unexpected value: " + getType());
             }
 
-            command.then(Commands.argument("value", type).executes(this::setValue));
+            command.then(Commands.argument("value", type).executes(this::setValue)).executes(this);
 
             return command;
         }
@@ -98,6 +102,7 @@ public class CommandChaosCraftConfig extends ChaosCraftCommand {
 
         @Override // show info
         public int run(CommandContext<CommandSource> context) {
+            System.out.println("hi :(");
             context.getSource().sendFeedback(getInfoMessage(context, getConfigValue().get()), false);
             return 1;
         }
@@ -153,7 +158,7 @@ public class CommandChaosCraftConfig extends ChaosCraftCommand {
 
             @Override
             public String getDefault() {
-                return (String) info.defauld;
+                return String.valueOf(info.defauld);
             }
         }
 
@@ -239,7 +244,7 @@ public class CommandChaosCraftConfig extends ChaosCraftCommand {
 
             @Override
             public String getDefault() {
-                return (String) info.defauld;
+                return String.valueOf(info.defauld);
             }
         }
     }
