@@ -14,6 +14,11 @@ public class EventInvertXAndZ extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Changes your X to your Z and your Z to your X\n\nUsed to be called \"Invert X and Z\"";
+    }
+
+    @Override
     public String getId() {
         return "invert_x_and_z";
     }

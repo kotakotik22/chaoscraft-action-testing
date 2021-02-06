@@ -22,6 +22,11 @@ public class EventZombieRaid extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Spawns 15 zombies on each player, there is a 50% chance of each each of them being a baby";
+    }
+
+    @Override
     public String getId() {
         return "zombie_raid";
     }

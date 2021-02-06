@@ -16,6 +16,11 @@ public class EventWaterCeiling extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Sets the block above you to water";
+    }
+
+    @Override
     public String getId() {
         return "water_ceiling";
     }

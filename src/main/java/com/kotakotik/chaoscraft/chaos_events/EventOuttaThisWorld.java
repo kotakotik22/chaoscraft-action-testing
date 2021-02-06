@@ -22,6 +22,11 @@ public class EventOuttaThisWorld extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Teleports you to a random vanilla dimension";
+    }
+
+    @Override
     public String getId() {
         return "outta_this_world";
     }

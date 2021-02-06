@@ -14,6 +14,13 @@ public class EventWrongCoords extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Note: This is also called \"Wrong coords\" in some places\n" +
+                "\n" +
+                "Multiplies your X and Z by -1, so if they are positive, they turn negative and the other way\n";
+    }
+
+    @Override
     public String getId() {
         return "wrong_coords";
     }

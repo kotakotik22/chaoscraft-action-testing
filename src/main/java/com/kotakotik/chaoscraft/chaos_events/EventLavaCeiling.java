@@ -15,6 +15,11 @@ public class EventLavaCeiling extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Sets the block above you to lava";
+    }
+
+    @Override
     public String getId() {
         return "lava_ceiling";
     }

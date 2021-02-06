@@ -19,6 +19,11 @@ public class EventHyperspeed extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Gives you speed 50 for 20 seconds";
+    }
+
+    @Override
     public String getId() {
         return "hyperspeed";
     }

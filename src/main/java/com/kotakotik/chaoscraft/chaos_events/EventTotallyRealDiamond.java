@@ -17,6 +17,11 @@ public class EventTotallyRealDiamond extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Gives you 64 *totally* real diamonds, the *totally* don't kill you when you hold them";
+    }
+
+    @Override
     public String getId() {
         return "totally_real_diamond";
     }

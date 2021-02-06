@@ -16,6 +16,11 @@ public class EventKillAllPlayers extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Yeah, it just kills all players lol";
+    }
+
+    @Override
     public String getId() {
         return "kill_all_players";
     }

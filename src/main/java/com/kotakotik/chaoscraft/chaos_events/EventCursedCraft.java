@@ -14,6 +14,13 @@ public class EventCursedCraft extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Sets the amount of items in the current held stack to the max stack size of it + 1\n" +
+                "\n" +
+                "So, with most of the items, the max stack size is 64, so the amount changes to 65, with some items like the snowballs and ender pearls, the max stack size is 16 so the amount changes to 17, and 2 with items with durability like swords";
+    }
+
+    @Override
     public String getId() {
         return "cursed_craft";
     }

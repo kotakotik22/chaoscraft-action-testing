@@ -1,6 +1,7 @@
 package com.kotakotik.chaoscraft.datagen;
 
 import com.kotakotik.chaoscraft.Chaos;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvents;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -18,5 +19,6 @@ public class DataGenerators {
 //        generator.addProvider(new RussianTranslations(generator, XYKey.MODID, "ru_ru"));
         // the generator doesnt work at all with cyrillic
         // lol i forgot i stole this datagen piece from XYKey
+        generator.addProvider(new WikiGen(generator, ChaosEvents.getAll()));
     }
 }

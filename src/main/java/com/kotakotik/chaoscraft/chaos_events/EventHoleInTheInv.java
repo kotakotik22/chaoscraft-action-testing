@@ -13,6 +13,11 @@ public class EventHoleInTheInv extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Drop all of your items in all directions";
+    }
+
+    @Override
     public String getId() {
         return "hole_in_the_inv";
     }

@@ -15,16 +15,20 @@ import java.util.List;
 
 public abstract class ChaosEvent {
     public abstract String getEnglish();
+    public abstract String getEnglishDescription();
     public abstract String getId();
     public abstract void start(MinecraftServer server);
 
     public String getTranslation(String... args) {
         return Translation.getTranslation(getTranslationKey(), args);
     }
-
     public String getTranslationKey() {
         return Chaos.ChaosNamePrefix + getId();
     }
+
+    // desc translation coming soon!
+    public String getDescTranslation(String... args) {return Translation.getTranslation(getDescTranslationKey(), args);}
+    public String getDescTranslationKey() {return Chaos.ChaosNamePrefix + getId() + ".description";}
 
     public boolean hasOnOffConfig() {
         return true;
@@ -39,6 +43,36 @@ public abstract class ChaosEvent {
         // https://github.com/kotakotik22/chaoscraft/wiki/Actually-real-diamond
         // ^ example of a link
         return getWikiFirst() + wikiReplace(getEnglish());
+    }
+
+    public String generateWikiPage() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append(getEnglishDescription());
+        if(!getExtraConfig().isEmpty()) {
+            stringBuilder.append("\n\n\nConfig (``").append("events.").append(getId()).append(".extra_config``):");
+
+        /*
+        Sample:
+        Config (``events.ten_hour_mining_session.extra_config``):
+        * Whether to fill armor slots (``fillArmor``)
+        * How much cobblestone in a stack (``cobbleInSlot``)
+         * How many stacks to give (``stacksOfCobble``)
+         */
+
+            for(ExtraEventConfig config : getExtraConfig()) {
+                stringBuilder.
+                        append("\n* ").
+                        append(config.desc).
+                        append(". Default: ").
+                        append(String.valueOf(config.defauld)).
+                        append(" (``").append(config.id).append("``)");
+            }
+        } else {
+            stringBuilder.append("\n\nThis event does not have config.");
+        }
+
+        return stringBuilder.toString();
     }
 
     public List<ExtraEventConfig> getExtraConfig() {
@@ -74,7 +108,7 @@ public abstract class ChaosEvent {
         return getWikiPageReplace(new HashMap<>());
     }
 
-    private String wikiReplace(String original) {
+    public String wikiReplace(String original) {
         String temp = original;
         HashMap<String, String> toReplace = getWikiPageReplace();
         for(String key : toReplace.keySet()) {

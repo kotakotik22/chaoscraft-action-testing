@@ -25,6 +25,11 @@ public class TEventBlindness extends ChaosEventTemp {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "";
+    }
+
+    @Override
     public String getId() {
         return "temp_blindness";
     }

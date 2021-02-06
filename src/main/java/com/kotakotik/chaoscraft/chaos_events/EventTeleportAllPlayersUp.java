@@ -18,6 +18,11 @@ public class EventTeleportAllPlayersUp extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Teleports all players to Y 300";
+    }
+
+    @Override
     public String getId() {
         return "teleport_all_players_up";
     }

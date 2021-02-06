@@ -15,6 +15,11 @@ public class EventActuallyRealDiamond extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Gives every player an actual diamond";
+    }
+
+    @Override
     public String getId() {
         return "actually_real_diamond";
     }

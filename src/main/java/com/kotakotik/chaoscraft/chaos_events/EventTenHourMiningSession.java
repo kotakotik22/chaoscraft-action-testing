@@ -19,6 +19,11 @@ public class EventTenHourMiningSession extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Gives you 50 stacks of cobblestone, all of the cobblestone that doesn't fit into your inventory is dropped. This will fill all of the free slots, even the armor slots! That's how cobblestone man was born";
+    }
+
+    @Override
     public String getId() {
         return "ten_hour_mining_session";
     }

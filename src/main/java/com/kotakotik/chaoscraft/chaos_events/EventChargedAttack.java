@@ -22,6 +22,11 @@ public class EventChargedAttack extends ChaosEvent {
     }
 
     @Override
+    public String getEnglishDescription() {
+        return "Spawns 15 charged creepers at every player";
+    }
+
+    @Override
     public String getId() {
         return "charged_attack";
     }
