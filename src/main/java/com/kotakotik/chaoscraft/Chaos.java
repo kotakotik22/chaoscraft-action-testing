@@ -52,7 +52,7 @@ public class Chaos {
 
         registerEvents();
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG, "chaoscraft.toml");
 
         Registration.register();
 

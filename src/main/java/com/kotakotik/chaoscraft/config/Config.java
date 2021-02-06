@@ -1,6 +1,5 @@
 package com.kotakotik.chaoscraft.config;
 
-import com.kotakotik.chaoscraft.Chaos;
 import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvent;
 import com.kotakotik.chaoscraft.chaos_handlers.ChaosEventHandler;
 import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvents;
@@ -15,10 +14,12 @@ import java.util.List;
 
 @Mod.EventBusSubscriber
 public class Config {
+    // TODO: check that if the config chances while on a server, the clients will update the info.
+
     public static final String CATEGORY_GENERAL = "general";
     public static final String CATEGORY_EVENTS = "events";
 
-    public static ForgeConfigSpec SERVER_CONFIG;
+    public static ForgeConfigSpec COMMON_CONFIG;
 
     public static ForgeConfigSpec.IntValue SECONDS_FOR_EVENT;
     public static ForgeConfigSpec.IntValue SECONDS_FOR_SYNC;
@@ -109,12 +110,12 @@ public class Config {
 
 
     static {
-        ForgeConfigSpec.Builder SERVER_BUILDER = new ForgeConfigSpec.Builder();
+        ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
 
-        SERVER_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
+        COMMON_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
 
         SECONDS_FOR_EVENT = register(
-                SERVER_BUILDER,
+                COMMON_BUILDER,
                 "secondsForEvent",
                 "How many seconds to wait before starting a new event",
                 30,
@@ -122,7 +123,7 @@ public class Config {
         );
 
         SECONDS_FOR_SYNC = register(
-                SERVER_BUILDER,
+                COMMON_BUILDER,
                 "secondsForSync",
                 "How many seconds to wait before syncing the timer on client (only used if autoSync is enabled)",
                 20,
@@ -130,7 +131,7 @@ public class Config {
         );
 
         AUTO_SYNC = register(
-                SERVER_BUILDER,
+                COMMON_BUILDER,
                 "autoSync",
                 "Whether to sync the timer on client, the seconds to sync is secondsForSync",
                 true,
@@ -138,7 +139,7 @@ public class Config {
         );
 
        SECONDS_FOR_SAVE = register(
-               SERVER_BUILDER,
+               COMMON_BUILDER,
                "secondsForSave",
                "How many seconds to wait before saving the time left until the next event (only used if saveTimer is enabled)",
                5,
@@ -146,23 +147,23 @@ public class Config {
        );
 
        SAVE_TIMER = register(
-               SERVER_BUILDER,
+               COMMON_BUILDER,
                "saveTimer",
                "Whether to save the time left until the next event",
                true,
                true
        );
 
-        SERVER_BUILDER.pop();
+        COMMON_BUILDER.pop();
 
-        SERVER_BUILDER.comment("Event settings").push(CATEGORY_EVENTS);
+        COMMON_BUILDER.comment("Event settings").push(CATEGORY_EVENTS);
 
         for(ChaosEvent event : ChaosEvents.getAll()) {
-            SERVER_BUILDER.comment(event.getEnglish(), event.getWikiPage()).push(event.getId());
+            COMMON_BUILDER.comment(event.getEnglish(), event.getWikiPage()).push(event.getId());
 
             if(event.hasOnOffConfig()) {
                 eventBooleans.put(event.getId(), register(
-                        SERVER_BUILDER,
+                        COMMON_BUILDER,
                         "enabled",
                         "Whether " + event.getId() + " is enabled",
                         event.isEnabledOnDefault(),
@@ -170,7 +171,7 @@ public class Config {
                 ));
             }
 
-            SERVER_BUILDER.comment("Extra config for the event").push("extra_config");
+            COMMON_BUILDER.comment("Extra config for the event").push("extra_config");
 
             List<ExtraEventConfig> extraConfig = event.getExtraConfig();
 
@@ -180,7 +181,7 @@ public class Config {
                     case INT:
                         extraConfigs.put(confId,
                                 register(
-                                        SERVER_BUILDER,
+                                        COMMON_BUILDER,
                                         conf.id,
                                         conf.desc,
                                         (int) conf.defauld,
@@ -192,7 +193,7 @@ public class Config {
                     case BOOL:
                         extraConfigs.put(confId,
                                 register(
-                                        SERVER_BUILDER,
+                                        COMMON_BUILDER,
                                         conf.id,
                                         conf.desc,
                                         (boolean) conf.defauld,
@@ -202,14 +203,14 @@ public class Config {
                 }
             }
 
-            SERVER_BUILDER.pop();
+            COMMON_BUILDER.pop();
 
-            SERVER_BUILDER.pop();
+            COMMON_BUILDER.pop();
         }
 
-        SERVER_BUILDER.pop();
+        COMMON_BUILDER.pop();
 
-        SERVER_CONFIG = SERVER_BUILDER.build();
+        COMMON_CONFIG = COMMON_BUILDER.build();
     }
 
     public static ForgeConfigSpec.BooleanValue getEventBool(String id) {
