@@ -99,7 +99,7 @@ public abstract class ChaosEvent {
     */
     public HashMap<String, String> getWikiPageReplace(HashMap<String, String> map) {
         map.put(" ", "-");
-        map.put(",", "%2C");
+        map.put(",", "");
         map.put("!", "");
         return map;
     }
