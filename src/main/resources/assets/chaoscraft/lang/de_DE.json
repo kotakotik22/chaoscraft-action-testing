@@ -1,0 +1,23 @@
+{
+  "chaoscraft.event.actually_real_diamond": "Eigentlich echter Diamant",
+  "chaoscraft.event.charged_attack": "Aufgeladener Angriff!",
+  "chaoscraft.event.cursed_craft": "CursedCraft",
+  "chaoscraft.event.hole_in_the_inv": "Loch im Inventar",
+  "chaoscraft.event.hyperspeed": "Hypergeschwindigkeit",
+  "chaoscraft.event.invert_x_and_z": "Tausche X und Z",
+  "chaoscraft.event.kill_all_players": "Töte alle Spieler",
+  "chaoscraft.event.lava_ceiling": "Lavadecke",
+  "chaoscraft.event.outta_this_world": "Raus aus dieser Welt",
+  "chaoscraft.event.teleport_all_players_up": "Teleportiere alle Spieler nach oben",
+  "chaoscraft.event.ten_hour_mining_session": "Zehn Stunden Mining Sitzung",
+  "chaoscraft.event.totally_real_diamond": "Totaler echter Diamant",
+  "chaoscraft.event.water_ceiling": "Wasserdecke",
+  "chaoscraft.event.wrong_coords": "Ich sagte dir positive X, nicht negativ!",
+  "chaoscraft.event.zombie_raid": "Zombie Überfall!",
+  "chaoscraft.event_started": "§6§lEreignis startet: %s",
+  "chaoscraft.timed_event_started": "§6§lEreignis startet: %s (%d Sekunden)",
+  "chaoscraft.timer": "Nächstes Ereignis in %s Sekunden",
+  "death.attack.chaoscraft.kill_all_players": "%s wurde durch Chaos getötet",
+  "death.attack.chaoscraft.totally_real_diamond_death": "%s hat herausgefunden, dass der Diamant tatsächlich gefälscht war",
+  "item.chaoscraft.totally_real_diamond": "Totaler echter Diamant"
+}
