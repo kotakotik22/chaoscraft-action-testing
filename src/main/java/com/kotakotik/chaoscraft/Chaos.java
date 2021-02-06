@@ -2,6 +2,7 @@ package com.kotakotik.chaoscraft;
 
 import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvent;
 import com.kotakotik.chaoscraft.chaos_handlers.ChaosEventRegister;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEventTemp;
 import com.kotakotik.chaoscraft.config.Config;
 import com.kotakotik.chaoscraft.networking.ModPacketHandler;
 import net.minecraft.block.Block;
@@ -77,9 +78,15 @@ public class Chaos {
 //            System.out.println(clazz.isAssignableFrom(ChaosEvent.class));
             if(ChaosEvent.class.isAssignableFrom(clazz)) {
                 Class<? extends ChaosEvent> eventClass = (Class<? extends ChaosEvent>) clazz;
-                eventz.add(eventClass);
                 ChaosEvent eventInstance = eventClass.newInstance();
-                eventInstances.add(eventInstance);
+                if(eventInstance instanceof ChaosEventTemp) {
+                    LOGGER.info("event " + eventInstance.getId() + " is a temp event. registering as a temp event");
+                    tempEventz.add((Class<? extends ChaosEventTemp>) eventClass);
+                    tempEventInstances.add((ChaosEventTemp) eventInstance);
+                } else {
+                    eventz.add(eventClass);
+                    eventInstances.add(eventInstance);
+                }
                 LOGGER.info("registered event: " + eventInstance.getId() + " ("+eventClass.getName()+ ")");
             } else {
                 LOGGER.warn(ev.getClassType().getClassName() + " has event annotation but does not extend ChaosEvent");
@@ -119,6 +126,8 @@ public class Chaos {
 
     public static final List<Class<? extends ChaosEvent>> eventz = new ArrayList<>();
     public static final List<ChaosEvent> eventInstances = new ArrayList<>();
+    public static final List<Class<? extends ChaosEventTemp>> tempEventz = new ArrayList<>();
+    public static final List<ChaosEventTemp> tempEventInstances = new ArrayList<>();
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent

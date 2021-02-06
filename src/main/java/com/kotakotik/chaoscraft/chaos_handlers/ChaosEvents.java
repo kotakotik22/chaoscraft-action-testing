@@ -36,9 +36,29 @@ public class ChaosEvents {
         return map;
     }
 
+    public static HashMap<String, ChaosEventTemp> getTempsAsMap() {
+        HashMap<String, ChaosEventTemp> map = new HashMap<>();
+
+        for(ChaosEventTemp chaosEvent : getTempsAsList()) {
+            map.put(chaosEvent.getId(), chaosEvent);
+        }
+
+        return map;
+    }
+
     public static List<ChaosEvent> getAsList() {
 //        return Arrays.asList(Events.clone());
         return Chaos.eventInstances;
+    }
+
+    public static List<ChaosEventTemp> getTempsAsList() {
+        return Chaos.tempEventInstances;
+    }
+
+    public static List<ChaosEvent> getAll() {
+        List<ChaosEvent> events = getAsList();
+        events.addAll(getTempsAsList());
+        return events;
     }
 
 //    public static ChaosEvent[] getAsArray() {

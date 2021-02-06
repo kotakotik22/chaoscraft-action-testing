@@ -3,6 +3,7 @@ package com.kotakotik.chaoscraft.config;
 import com.kotakotik.chaoscraft.Chaos;
 import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvent;
 import com.kotakotik.chaoscraft.chaos_handlers.ChaosEventHandler;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvents;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -156,7 +157,7 @@ public class Config {
 
         SERVER_BUILDER.comment("Event settings").push(CATEGORY_EVENTS);
 
-        for(ChaosEvent event : Chaos.eventInstances) {
+        for(ChaosEvent event : ChaosEvents.getAll()) {
             SERVER_BUILDER.comment(event.getEnglish(), event.getWikiPage()).push(event.getId());
 
             if(event.hasOnOffConfig()) {

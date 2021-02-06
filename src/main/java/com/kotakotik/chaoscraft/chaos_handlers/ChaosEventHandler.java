@@ -20,7 +20,6 @@ import org.apache.logging.log4j.LogManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Mod.EventBusSubscriber()
 public class ChaosEventHandler {
@@ -28,6 +27,7 @@ public class ChaosEventHandler {
     public static int ticksClient = 0;
 
     private static List<ChaosEvent> enabledEvents = new ArrayList<>();
+    private static List<ChaosEventTemp> activeEvents = new ArrayList<>();
 
     private static MinecraftServer Server;
 
@@ -78,9 +78,9 @@ public class ChaosEventHandler {
             ChaosEvent randomEvent = ChaosEvents.getRandom(enabledEvents);
 
             for (ServerPlayerEntity player : Server.getPlayerList().getPlayers()) {
-                if(randomEvent instanceof ChaosEventTimed) {
+                if(randomEvent instanceof ChaosEventTemp) {
                     // Timed events are not done
-                    player.sendStatusMessage(TranslationKeys.TimedEventStarted.getComponent(randomEvent.getTranslation(), String.valueOf(((ChaosEventTimed) randomEvent).getDuration())), false);
+                    player.sendStatusMessage(TranslationKeys.TimedEventStarted.getComponent(randomEvent.getTranslation(), String.valueOf(((ChaosEventTemp) randomEvent).getDuration())), false);
                 } else {
                     player.sendStatusMessage(TranslationKeys.EventStarted.getComponent(randomEvent.getTranslation()), false);
                 }
