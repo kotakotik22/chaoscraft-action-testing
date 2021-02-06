@@ -51,11 +51,9 @@ public class WikiGen implements IDataProvider {
         builder.append("### Events");
 
         for(ChaosEvent event : events) {
-            builder.append("\n* [")
+            builder.append("\n* [[")
                 .append(getPageName(event))
-                .append("](")
-                .append(event.getWikiPage())
-                .append(")");
+                    .append("]]");
         }
 
         save(builder.toString(), "_Sidebar");
