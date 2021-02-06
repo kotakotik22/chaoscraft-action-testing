@@ -4,7 +4,7 @@
   "chaoscraft.event.cursed_craft": "CursedCraft",
   "chaoscraft.event.hole_in_the_inv": "Дыра в инвентаре",
   "chaoscraft.event.hyperspeed": "Гиперскорость",
-  "chaoscraft.event.invert_x_and_z": "Инвертировать X и Z",
+  "chaoscraft.event.invert_x_and_z": "Поменять местами X и Z",
   "chaoscraft.event.kill_all_players": "Убить всех игроков",
   "chaoscraft.event.lava_ceiling": "Лавовый потолок",
   "chaoscraft.event.outta_this_world": "Вне этого мира",
