@@ -52,7 +52,7 @@ public class WikiGen implements IDataProvider {
 
         for(ChaosEvent event : events) {
             builder.append("\n* [")
-                .append(event.getEnglish())
+                .append(getPageName(event))
                 .append("](")
                 .append(event.getWikiPage())
                 .append(")");
