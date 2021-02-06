@@ -8,6 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,7 @@ public class Config {
     public static ForgeConfigSpec.BooleanValue AUTO_SYNC;
     public static ForgeConfigSpec.IntValue SECONDS_FOR_SAVE;
     public static ForgeConfigSpec.BooleanValue SAVE_TIMER;
+    @Deprecated
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> CUSTOM_EVENTS;
 
     @Deprecated
@@ -185,12 +187,12 @@ public class Config {
                true
        );
 
-       CUSTOM_EVENTS = register(
-               COMMON_BUILDER,
-               "customEvents",
-               "A list of custom events. Each string must be a JSON object with the info about the event. This info should be available to read on the wiki.",
-               false
-       );
+//       CUSTOM_EVENTS = register(
+//               COMMON_BUILDER,
+//               "customEvents",
+//               "A list of custom events. Each string must be a JSON object with the info about the event. This info should be available to read on the wiki.",
+//               false
+//       );
 
         COMMON_BUILDER.pop();
 
@@ -268,13 +270,12 @@ public class Config {
     }
 
     @SubscribeEvent
-    public static void onLoad(final ModConfig.Loading configEvent) {
+    public static void onLoad(final ModConfig.Loading configEvent) throws IOException {
         ChaosEventHandler.updateEnabledEvents();
     }
 
     @SubscribeEvent
-    public static void onReload(final ModConfig.Reloading configEvent) {
+    public static void onReload(final ModConfig.Reloading configEvent) throws IOException {
         ChaosEventHandler.updateEnabledEvents();
-
     }
 }

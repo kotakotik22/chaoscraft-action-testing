@@ -20,6 +20,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 
 public class CommandChaosCraftConfig extends ChaosCraftCommand {
@@ -201,7 +202,11 @@ public class CommandChaosCraftConfig extends ChaosCraftCommand {
             @Override
             public int setValue(CommandContext<CommandSource> ctx) {
                 int toRet =  super.setValue(ctx);
-                ChaosEventHandler.updateEnabledEvents();
+                try {
+                    ChaosEventHandler.updateEnabledEvents();
+                } catch (IOException ignored) {
+
+                }
                 return toRet;
             }
         }

@@ -12,7 +12,7 @@ public class CustomEvent {
         return new ChaosEvent() {
             @Override
             public String getEnglish() {
-                return english;
+                return name;
             }
 
             @Override
@@ -27,7 +27,7 @@ public class CustomEvent {
 
             @Override
             public String getId() {
-                return id;
+                return "custom_event";
             }
 
             @Override
@@ -39,27 +39,27 @@ public class CustomEvent {
         };
     }
 
-    @SerializedName("english")
-    private String english;
-
-    @SerializedName("id")
-    private String id;
+    @SerializedName("name")
+    private String name;
 
     @SerializedName("commands")
     private List<String> commands;
 
-    public String getEnglish() {
-        return english;
-    }
-
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
     public List<String> getCommands() {
         return commands;
     }
 
+    public String toJson(Gson gson) {
+        return getJson(this, gson);
+    }
+
+    public static String getJson(CustomEvent event, Gson gson) {
+        return gson.toJson(event);
+    }
     public static CustomEvent getCustom(String json, Gson gson) {
         return gson.fromJson(json, CustomEvent.class);
     }

@@ -7,6 +7,7 @@ import com.kotakotik.chaoscraft.config.Config;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerRestart;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerSet;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerSync;
+import com.kotakotik.chaoscraft.utils.FileUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
@@ -16,11 +17,16 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
+import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 @Mod.EventBusSubscriber()
 public class ChaosEventHandler {
@@ -43,7 +49,7 @@ public class ChaosEventHandler {
         return enabledEvents;
     }
 
-    public static List<ChaosEvent> updateEnabledEvents() {
+    public static List<ChaosEvent> updateEnabledEvents() throws IOException {
         List<ChaosEvent> tempEnabledEvents = new ArrayList<>();
         HashMap<String, ForgeConfigSpec.BooleanValue> vals = Config.getEventBooleans();
         HashMap<String, ChaosEvent> events = ChaosEvents.getAsMap();
@@ -57,13 +63,8 @@ public class ChaosEventHandler {
                 tempEnabledEvents.add(events.get(id));
             }
         }
-        List<? extends String> customEvents = Config.CUSTOM_EVENTS.get();
 
-       for(String json : customEvents) {
-           CustomEvent customEvent = CustomEvent.getCustom(json, GSON);
-           ChaosEvent event = customEvent.getEvent(Server);
-           tempEnabledEvents.add(event);
-       }
+        registerCustomEvents(tempEnabledEvents);
 
         enabledEvents = tempEnabledEvents;
         LogManager.getLogger().info(
@@ -137,7 +138,7 @@ public class ChaosEventHandler {
     }
 
     @SubscribeEvent
-    public static void onServerStarted(FMLServerStartedEvent event) {
+    public static void onServerStarted(FMLServerStartedEvent event) throws IOException {
         Server = event.getServer();
         updateEnabledEvents();
     }
@@ -146,4 +147,17 @@ public class ChaosEventHandler {
         return ticks;
     }
 
+    public static void registerCustomEvents(List<ChaosEvent> list) throws IOException {
+        Path gamedir = FMLPaths.GAMEDIR.get();
+        Path eventFolder = gamedir.resolve("chaoscraft.custom_events");
+        if(!eventFolder.toFile().exists()) {
+            eventFolder.toFile().mkdir();
+        }
+        for(File file : Objects.requireNonNull(eventFolder.toFile().listFiles())) {
+            String json = FileUtils.readFile(file.toPath());
+           CustomEvent customEvent = CustomEvent.getCustom(json, GSON);
+           ChaosEvent event = customEvent.getEvent(Server);
+           list.add(event);
+        }
+    }
 }

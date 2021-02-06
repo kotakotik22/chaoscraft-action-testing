@@ -4,6 +4,7 @@ import com.google.common.base.Utf8;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvent;
+import com.kotakotik.chaoscraft.utils.FileUtils;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
@@ -72,9 +73,7 @@ public class WikiGen implements IDataProvider {
     }
 
     private String read(Path target) throws IOException {
-        try (BufferedReader bufferedreader = Files.newBufferedReader(target)) {
-            return bufferedreader.lines().collect(Collectors.joining("\n"));
-        }
+        return FileUtils.readFile(target);
     }
 
     private void save(String content, Path target) throws IOException {
