@@ -47,18 +47,18 @@ public class TEventBlindness extends ChaosEventTemp {
     @Mod.EventBusSubscriber
     public static class ClientHandler {
         public static boolean activated = false;
-        @SubscribeEvent
-        public static void render(RenderGameOverlayEvent event) {
-            if(activated) {
-                MainWindow window = event.getWindow();
-                Minecraft MC = Minecraft.getInstance();
-                RenderSystem.enableBlend();
-                int gui_position_x = 3;
-                int gui_position_y = 3;
-                MC.ingameGUI.blit(event.getMatrixStack(),0,0,0,0,50,50);
-                GL11.glPopMatrix();
-            }
-        }
+//        @SubscribeEvent
+//        public static void render(RenderGameOverlayEvent event) {
+//            if(activated) {
+//                MainWindow window = event.getWindow();
+//                Minecraft MC = Minecraft.getInstance();
+//                RenderSystem.enableBlend();
+//                int gui_position_x = 3;
+//                int gui_position_y = 3;
+//                MC.ingameGUI.blit(event.getMatrixStack(),0,0,0,0,50,50);
+//                GL11.glPopMatrix();
+//            }
+//        }
         public static class StartEvent extends ModPacket {
             @Override
             public boolean onReceived(Supplier<NetworkEvent.Context> ctx) {

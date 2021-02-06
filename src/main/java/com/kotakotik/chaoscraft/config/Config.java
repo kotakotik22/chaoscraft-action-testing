@@ -119,7 +119,7 @@ public class Config {
         return configValue;
     }
 
-    public ForgeConfigSpec.ConfigValue<List<? extends String>> register(ForgeConfigSpec.Builder BUILDER, String name,
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> register(ForgeConfigSpec.Builder BUILDER, String name,
                                                                         String description, List<String> defauld, boolean addCommand) {
 
         ForgeConfigSpec.ConfigValue<List<? extends String>> configValue = BUILDER.comment(description, "default: " + defauld, "type: string list")
@@ -130,7 +130,7 @@ public class Config {
         return configValue;
     }
 
-    public ForgeConfigSpec.ConfigValue<List<? extends String>> register(ForgeConfigSpec.Builder BUILDER, String name,
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> register(ForgeConfigSpec.Builder BUILDER, String name,
                                                                         String description, boolean addCommand) {
         return register(BUILDER, name, description, new ArrayList<>(), addCommand);
     }
@@ -140,7 +140,7 @@ public class Config {
     public static HashMap<String, ForgeConfigSpec.ConfigValue<?>> extraConfigs = new HashMap<>();
 
 
-    {
+    static {
         ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
 
         COMMON_BUILDER.comment("General settings").push(CATEGORY_GENERAL);

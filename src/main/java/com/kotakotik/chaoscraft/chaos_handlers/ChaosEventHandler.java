@@ -1,6 +1,7 @@
 package com.kotakotik.chaoscraft.chaos_handlers;
 
 
+import com.google.gson.Gson;
 import com.kotakotik.chaoscraft.TranslationKeys;
 import com.kotakotik.chaoscraft.config.Config;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerRestart;
@@ -23,6 +24,8 @@ import java.util.List;
 
 @Mod.EventBusSubscriber()
 public class ChaosEventHandler {
+    private static Gson GSON = new Gson();
+
     public static int ticks = 0;
     public static int ticksClient = 0;
 
@@ -54,6 +57,14 @@ public class ChaosEventHandler {
                 tempEnabledEvents.add(events.get(id));
             }
         }
+        List<? extends String> customEvents = Config.CUSTOM_EVENTS.get();
+
+       for(String json : customEvents) {
+           CustomEvent customEvent = CustomEvent.getCustom(json, GSON);
+           ChaosEvent event = customEvent.getEvent(Server);
+           tempEnabledEvents.add(event);
+       }
+
         enabledEvents = tempEnabledEvents;
         LogManager.getLogger().info(
                 String.format(
