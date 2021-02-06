@@ -45,7 +45,7 @@ public class WikiGen implements IDataProvider {
 
     private void generateSidebar() throws IOException {
         StringBuilder builder = new StringBuilder();
-        builder.append(read("Sidebar_pre.txt"));
+        builder.append(read("Sidebar_pre.md"));
         builder.append("\n\n");
 
         builder.append("### Events");
