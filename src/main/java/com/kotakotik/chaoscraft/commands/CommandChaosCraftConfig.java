@@ -5,6 +5,7 @@ import com.kotakotik.chaoscraft.chaos_handlers.ChaosEventHandler;
 import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvents;
 import com.kotakotik.chaoscraft.config.CType;
 import com.kotakotik.chaoscraft.config.Config;
+import com.kotakotik.chaoscraft.config.ConfigInfo;
 import com.kotakotik.chaoscraft.config.ExtraEventConfig;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -211,14 +212,14 @@ public class CommandChaosCraftConfig extends ChaosCraftCommand {
         public ArgumentBuilder<CommandSource, ?> register(CommandDispatcher<CommandSource> dispatcher) {
             LiteralArgumentBuilder<CommandSource> command = Commands.literal("general");
             command.requires(cs -> cs.hasPermissionLevel(2));
-            for(Config.ConfigInfo info : Config.registeredConfig) {
+            for(ConfigInfo.Info<?> info : Config.registeredConfig) {
                 command.then(new GeneralEachConfig(info).register(dispatcher));
             }
             return command;
         }
 
-        public static class GeneralEachConfig extends ConfigSetter<Config.ConfigInfo> {
-            public GeneralEachConfig(Config.ConfigInfo info) {
+        public static class GeneralEachConfig extends ConfigSetter<ConfigInfo.Info<?>> {
+            public GeneralEachConfig(ConfigInfo.Info<?> info) {
                 super(info);
             }
 
@@ -234,7 +235,7 @@ public class CommandChaosCraftConfig extends ChaosCraftCommand {
 
             @Override
             public CType getType() {
-                return info.type;
+                return info.getType();
             }
 
             @Override
