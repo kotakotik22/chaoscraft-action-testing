@@ -3,6 +3,7 @@
   "chaoscraft.event.cant_stop_jumping": "Can't stop jumping",
   "chaoscraft.event.charged_attack": "Charged attack!",
   "chaoscraft.event.cursed_craft": "CursedCraft",
+  "chaoscraft.event.deadly_sun": "The sun is a deadly lazer",
   "chaoscraft.event.flight": "I believe I can fly",
   "chaoscraft.event.hole_in_the_inv": "Hole in the inventory",
   "chaoscraft.event.hyperspeed": "Hyperspeed",
@@ -20,6 +21,7 @@
   "chaoscraft.timed_event_started": "\u00A76\u00A7lStarted event: %s (%d seconds)",
   "chaoscraft.timed_event_stopped": "\u00A7d\u00A7lStopped event: %s",
   "chaoscraft.timer": "Next event in %s seconds",
+  "death.attack.chaoscraft.deadly_sun": "%s shouldn't have gone on land",
   "death.attack.chaoscraft.kill_all_players": "%s got killed by chaos",
   "death.attack.chaoscraft.totally_real_diamond_death": "%s found out that the diamond was actually fake",
   "item.chaoscraft.totally_real_diamond": "Totally real diamond"

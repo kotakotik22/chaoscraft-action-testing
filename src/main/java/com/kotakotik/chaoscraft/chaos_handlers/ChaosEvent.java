@@ -131,4 +131,8 @@ public abstract class ChaosEvent {
         }
         return temp;
     }
+
+    public List<Credit> getCredits() {
+        return new ArrayList<>();
+    }
 }
