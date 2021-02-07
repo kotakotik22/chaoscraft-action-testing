@@ -3,6 +3,7 @@
   "chaoscraft.event.cant_stop_jumping": "Can't stop jumping",
   "chaoscraft.event.charged_attack": "Charged attack!",
   "chaoscraft.event.cursed_craft": "CursedCraft",
+  "chaoscraft.event.flight": "I believe I can fly",
   "chaoscraft.event.hole_in_the_inv": "Hole in the inventory",
   "chaoscraft.event.hyperspeed": "Hyperspeed",
   "chaoscraft.event.invert_x_and_z": "Swap X and Z",

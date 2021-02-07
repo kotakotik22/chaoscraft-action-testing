@@ -2,6 +2,9 @@ package com.kotakotik.chaoscraft.chaos_handlers;
 
 import net.minecraft.server.MinecraftServer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class ChaosEventTemp extends ChaosEvent {
     private boolean ended = false;
 
@@ -31,5 +34,21 @@ public abstract class ChaosEventTemp extends ChaosEvent {
 
     public boolean hasEnded() {
         return ended;
+    }
+
+    public List<ChaosEventTemp> incompatibleWith() {
+        return new ArrayList<>();
+    }
+
+    public boolean incompatibleWith(ChaosEventTemp eventTemp) {
+        return incompatibleWith().contains(eventTemp);
+    }
+
+    public boolean isCompatibleWith(ChaosEventTemp eventTemp) {
+        return !(incompatibleWith(eventTemp) || eventTemp.incompatibleWith(this));
+    }
+
+    public boolean isIncompatibleWith(ChaosEventTemp eventTemp) {
+        return !isCompatibleWith(eventTemp);
     }
 }

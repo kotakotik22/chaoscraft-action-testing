@@ -68,7 +68,7 @@ public class ChaosEventHandler {
            }
             if( val || (/* handler for events without on/off config */!vals.containsKey(id) && event.isEnabledOnDefault())) {
                 if(event instanceof ChaosEventTemp) {
-                    if(!activeEvents.contains((ChaosEventTemp) event)) {
+                    if(!activeEvents.contains((ChaosEventTemp) event) && activeEvents.stream().noneMatch((event1) -> event1.isIncompatibleWith((ChaosEventTemp) event))) {
                         tempEnabledEvents.add(events.get(id));
                     }
                 } else {
