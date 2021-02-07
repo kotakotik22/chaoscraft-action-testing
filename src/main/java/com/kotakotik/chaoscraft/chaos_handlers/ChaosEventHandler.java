@@ -2,6 +2,8 @@ package com.kotakotik.chaoscraft.chaos_handlers;
 
 
 import com.google.gson.Gson;
+import com.kotakotik.chaoscraft.Chaos;
+import com.kotakotik.chaoscraft.Translation;
 import com.kotakotik.chaoscraft.TranslationKeys;
 import com.kotakotik.chaoscraft.config.Config;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerRestart;
@@ -11,6 +13,8 @@ import com.kotakotik.chaoscraft.utils.FileUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -18,6 +22,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import org.apache.logging.log4j.LogManager;
 
 import java.io.File;
@@ -37,6 +42,8 @@ public class ChaosEventHandler {
 
     private static List<ChaosEvent> enabledEvents = new ArrayList<>();
     private static List<ChaosEventTemp> activeEvents = new ArrayList<>();
+
+    public static List<ChaosEvent> customEvents = new ArrayList<>();
 
     private static MinecraftServer Server;
 
@@ -60,25 +67,31 @@ public class ChaosEventHandler {
                val = vals.get(id).get();
            }
             if( val || (/* handler for events without on/off config */!vals.containsKey(id) && event.isEnabledOnDefault())) {
-                tempEnabledEvents.add(events.get(id));
+                if(event instanceof ChaosEventTemp) {
+                    if(!activeEvents.contains((ChaosEventTemp) event)) {
+                        tempEnabledEvents.add(events.get(id));
+                    }
+                } else {
+                    tempEnabledEvents.add(events.get(id));
+                }
             }
         }
 
-        registerCustomEvents(tempEnabledEvents);
+        tempEnabledEvents.addAll(customEvents);
 
         enabledEvents = tempEnabledEvents;
-        LogManager.getLogger().info(
-                String.format(
-                        "enabled events updated, number of enabled events: %d. number of disabled events: %d (does not include events that cannot be turned off or on)",
-                        enabledEvents.size(),
-                        events.size() - enabledEvents.size()
-                )
-        );
+//        LogManager.getLogger().info(
+//                String.format(
+//                        "enabled events updated, number of enabled events: %d. number of disabled events: %d (does not include events that cannot be turned off or on)",
+//                        enabledEvents.size(),
+//                        events.size() - enabledEvents.size()
+//                )
+//        );
         return enabledEvents;
     }
 
     @SubscribeEvent
-    public static void onTick(TickEvent.ServerTickEvent event) {
+    public static void onTick(TickEvent.ServerTickEvent event) throws IOException {
         if(event.phase == TickEvent.Phase.START) return;
         if(Server == null) return;
         // why am i making so many comments rn lol
@@ -89,20 +102,35 @@ public class ChaosEventHandler {
         if(ticks >= ticksToNext) {
             ChaosEvent randomEvent = ChaosEvents.getRandom(enabledEvents);
 
+            TranslationTextComponent message = randomEvent instanceof ChaosEventTemp ?
+                    TranslationKeys.TimedEventStarted.getComponent(randomEvent.getTranslation(), String.valueOf(((ChaosEventTemp) randomEvent).getDuration()))
+                    :
+                    TranslationKeys.EventStarted.getComponent(randomEvent.getTranslation());
             for (ServerPlayerEntity player : Server.getPlayerList().getPlayers()) {
-                if(randomEvent instanceof ChaosEventTemp) {
-                    // Timed events are not done
-                    player.sendStatusMessage(TranslationKeys.TimedEventStarted.getComponent(randomEvent.getTranslation(), String.valueOf(((ChaosEventTemp) randomEvent).getDuration())), false);
-                } else {
-                    player.sendStatusMessage(TranslationKeys.EventStarted.getComponent(randomEvent.getTranslation()), false);
-                }
+                player.sendStatusMessage(message, false);
             }
             // send packet to restart timer to all players
             new PacketTimerRestart().sendToAllClients();
 
+            if(randomEvent instanceof ChaosEventTemp) {
+                ((ChaosEventTemp) randomEvent).reset();
+                activeEvents.add((ChaosEventTemp) randomEvent);
+                updateEnabledEvents();
+            }
+
             randomEvent.start(Server);
 
             ticks = 0;
+        }
+
+        List<ChaosEventTemp> copy = new ArrayList<>();
+        copy.addAll(activeEvents);
+        for(ChaosEventTemp event1 : copy) {
+            event1.tick(Server);
+            if(event1.hasEnded()) {
+                activeEvents.remove(event1);
+                updateEnabledEvents();
+            }
         }
     }
 
@@ -147,7 +175,8 @@ public class ChaosEventHandler {
         return ticks;
     }
 
-    public static void registerCustomEvents(List<ChaosEvent> list) throws IOException {
+    public static List<ChaosEvent> registerCustomEvents() throws IOException {
+        List<ChaosEvent> list = new ArrayList<>();
         Path gamedir = FMLPaths.GAMEDIR.get();
         Path eventFolder = gamedir.resolve("chaoscraft.custom_events");
         if(!eventFolder.toFile().exists()) {
@@ -159,5 +188,6 @@ public class ChaosEventHandler {
            ChaosEvent event = customEvent.getEvent(Server);
            list.add(event);
         }
+        return list;
     }
 }

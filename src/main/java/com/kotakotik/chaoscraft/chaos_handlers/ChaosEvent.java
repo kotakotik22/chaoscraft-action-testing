@@ -101,6 +101,7 @@ public abstract class ChaosEvent {
         map.put(" ", "-");
         map.put(",", "");
         map.put("!", "");
+        map.put("'", "");
         return map;
     }
 

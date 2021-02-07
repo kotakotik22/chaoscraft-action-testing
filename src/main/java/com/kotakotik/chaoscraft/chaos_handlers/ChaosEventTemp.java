@@ -21,7 +21,7 @@ public abstract class ChaosEventTemp extends ChaosEvent {
     private int ticksSinceEnable = 0;
 
     public void tick(MinecraftServer server) {
-        if(ticksSinceEnable >= getDuration()) {
+        if(ticksSinceEnable >= getDuration() * 20) {
             end(server);
             ended = true;
         } else {

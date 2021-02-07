@@ -2,6 +2,7 @@ package com.kotakotik.chaoscraft.chaos_handlers;
 
 import com.kotakotik.chaoscraft.Chaos;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -48,17 +49,14 @@ public class ChaosEvents {
 
     public static List<ChaosEvent> getAsList() {
 //        return Arrays.asList(Events.clone());
-        return Chaos.eventInstances;
+        List<ChaosEvent> events = new ArrayList<>();
+        events.addAll(Chaos.eventInstances);
+        events.addAll(Chaos.tempEventInstances);
+        return events;
     }
 
     public static List<ChaosEventTemp> getTempsAsList() {
         return Chaos.tempEventInstances;
-    }
-
-    public static List<ChaosEvent> getAll() {
-        List<ChaosEvent> events = getAsList();
-        events.addAll(getTempsAsList());
-        return events;
     }
 
 //    public static ChaosEvent[] getAsArray() {

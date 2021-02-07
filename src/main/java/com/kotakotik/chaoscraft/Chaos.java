@@ -1,6 +1,7 @@
 package com.kotakotik.chaoscraft;
 
 import com.kotakotik.chaoscraft.chaos_handlers.ChaosEvent;
+import com.kotakotik.chaoscraft.chaos_handlers.ChaosEventHandler;
 import com.kotakotik.chaoscraft.chaos_handlers.ChaosEventRegister;
 import com.kotakotik.chaoscraft.chaos_handlers.ChaosEventTemp;
 import com.kotakotik.chaoscraft.config.Config;
@@ -26,6 +27,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +42,7 @@ public class Chaos {
     public static final String MODID = "chaoscraft";
     public static final String ChaosNamePrefix = "chaoscraft.event.";
 
-    public Chaos() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public Chaos() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the enqueueIMC method for modloading
@@ -49,6 +51,8 @@ public class Chaos {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+
+        ChaosEventHandler.customEvents = ChaosEventHandler.registerCustomEvents();
 
         registerEvents();
 

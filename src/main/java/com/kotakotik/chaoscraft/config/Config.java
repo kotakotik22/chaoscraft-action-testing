@@ -198,7 +198,7 @@ public class Config {
 
         COMMON_BUILDER.comment("Event settings").push(CATEGORY_EVENTS);
 
-        for(ChaosEvent event : ChaosEvents.getAll()) {
+        for(ChaosEvent event : ChaosEvents.getAsList()) {
             COMMON_BUILDER.comment(event.getEnglish(), event.getWikiPage()).push(event.getId());
 
             if(event.hasOnOffConfig()) {

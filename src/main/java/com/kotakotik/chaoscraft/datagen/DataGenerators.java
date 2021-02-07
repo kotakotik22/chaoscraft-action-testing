@@ -19,6 +19,6 @@ public class DataGenerators {
 //        generator.addProvider(new RussianTranslations(generator, XYKey.MODID, "ru_ru"));
         // the generator doesnt work at all with cyrillic
         // lol i forgot i stole this datagen piece from XYKey
-        generator.addProvider(new WikiGen(generator, ChaosEvents.getAll()));
+        generator.addProvider(new WikiGen(generator, ChaosEvents.getAsList()));
     }
 }
