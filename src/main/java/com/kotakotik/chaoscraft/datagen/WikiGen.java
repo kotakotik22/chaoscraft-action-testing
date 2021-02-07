@@ -18,6 +18,7 @@ import java.nio.CharBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -26,12 +27,32 @@ public class WikiGen implements IDataProvider {
     public final List<ChaosEvent> events;
     public final DataGenerator gen;
     public static final String folder = "../../../chaoscraft.wiki/";
+    private String blacklist;
+    private List<String> blacklistedEvents = new ArrayList<>();
 
     @Override
     public void act(DirectoryCache cache) throws IOException {
         save("hello world", "hello");
+        readBlacklist();
         generateEventPages();
         generateSidebar();
+    }
+
+    private void readBlacklist() throws IOException {
+        blacklist = read("event-blacklist.md");
+        for(String line : blacklist.split("\n")) {
+            if(events.stream().anyMatch((event) -> event.getId().equals(line))) {
+                blacklistedEvents.add(line);
+            }
+        }
+    }
+
+    private boolean isEventBlacklisted(String event) {
+        return blacklistedEvents.contains(event);
+    }
+
+    private boolean isEventBlacklisted(ChaosEvent event) {
+        return isEventBlacklisted(event.getId());
     }
 
     private String getPageName(ChaosEvent event) {
@@ -40,6 +61,7 @@ public class WikiGen implements IDataProvider {
 
     private void generateEventPages() throws IOException {
         for(ChaosEvent event : events) {
+            if(isEventBlacklisted(event)) continue;
             saveEvent(event.generateWikiPage(), getPageName(event));
         }
     }
@@ -52,6 +74,7 @@ public class WikiGen implements IDataProvider {
         builder.append("### Events");
 
         for(ChaosEvent event : events) {
+            if(isEventBlacklisted(event)) continue;
             builder.append("\n* [[")
                 .append(getPageName(event))
                     .append("]]");
