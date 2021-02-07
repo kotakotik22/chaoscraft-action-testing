@@ -17,7 +17,7 @@ apply plugin: 'net.minecraftforge.gradle'
 
 
 group = 'com.kotakotik'
-version = "${minecraft_version}-${mod_version}"
+version = "${minecraft_version}-${mod_version}-${release_type}"
 archivesBaseName = 'chaoscraft'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
@@ -145,7 +145,7 @@ curseforge {
     def nameR = { ->
         switch (release_type) {
             case "snapshot":
-                return "Snapshot ${new Date().format("yy.MM.dd")}"
+                return "Snapshot ${new Date().format("yy.MM.dd.HH")}"
                 break;
             case "beta":
                 return "Beta ${mod_version}-${release_type}"
