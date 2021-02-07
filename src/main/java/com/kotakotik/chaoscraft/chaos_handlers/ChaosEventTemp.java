@@ -1,5 +1,7 @@
 package com.kotakotik.chaoscraft.chaos_handlers;
 
+import com.kotakotik.chaoscraft.TranslationKeys;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 
 import java.util.ArrayList;
@@ -9,7 +11,11 @@ public abstract class ChaosEventTemp extends ChaosEvent {
     private boolean ended = false;
 
     public abstract int getDuration();
-    public void end(MinecraftServer server) { }
+    public void end(MinecraftServer server) {
+        for (ServerPlayerEntity player : server.getPlayerList().getPlayers()) {
+            player.sendStatusMessage(TranslationKeys.TimedEventStopped.getComponent(getTranslation()), false);
+        }
+    }
 
     public void reset() {
         ended = false;

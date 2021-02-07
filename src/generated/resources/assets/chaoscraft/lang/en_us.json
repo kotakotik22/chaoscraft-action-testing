@@ -18,6 +18,7 @@
   "chaoscraft.event.zombie_raid": "Zombie raid!",
   "chaoscraft.event_started": "\u00A76\u00A7lStarted event: %s",
   "chaoscraft.timed_event_started": "\u00A76\u00A7lStarted event: %s (%d seconds)",
+  "chaoscraft.timed_event_stopped": "\u00A7d\u00A7lStopped event: %s",
   "chaoscraft.timer": "Next event in %s seconds",
   "death.attack.chaoscraft.kill_all_players": "%s got killed by chaos",
   "death.attack.chaoscraft.totally_real_diamond_death": "%s found out that the diamond was actually fake",
