@@ -73,7 +73,7 @@ public abstract class ChaosEvent {
             }
         }
 
-        extra.put("has extra config", String.valueOf(getExtraConfig().isEmpty()));
+        extra.put("has extra config", String.valueOf(!getExtraConfig().isEmpty()));
         extra.put("enabled by default", String.valueOf(isEnabledOnDefault()));
         extra.put("id", getId());
         extra.put("english name", getEnglish());
