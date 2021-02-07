@@ -49,8 +49,11 @@ public abstract class ChaosEvent {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append(getEnglishDescription());
+
+        HashMap<String, String> extra = new HashMap<>();
+
         if(!getExtraConfig().isEmpty()) {
-            stringBuilder.append("\n\n\nConfig (``").append("events.").append(getId()).append(".extra_config``):");
+            stringBuilder.append("\n\n\n## Config (``").append("events.").append(getId()).append(".extra_config``):");
 
         /*
         Sample:
@@ -68,8 +71,18 @@ public abstract class ChaosEvent {
                         append(String.valueOf(config.defauld)).
                         append(" (``").append(config.id).append("``)");
             }
-        } else {
-            stringBuilder.append("\n\nThis event does not have config.");
+        }
+
+        extra.put("has extra config", String.valueOf(getExtraConfig().isEmpty()));
+        extra.put("enabled by default", String.valueOf(isEnabledOnDefault()));
+        extra.put("id", getId());
+        extra.put("english name", getEnglish());
+
+        stringBuilder.append("\n\n## Extra info");
+
+        for(String key : extra.keySet()) {
+            String info = extra.get(key);
+            stringBuilder.append("\n* ").append(key).append(": ").append(info);
         }
 
         return stringBuilder.toString();
