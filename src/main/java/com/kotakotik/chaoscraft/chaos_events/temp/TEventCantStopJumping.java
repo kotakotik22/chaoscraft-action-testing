@@ -27,7 +27,7 @@ public class TEventCantStopJumping extends ChaosEventTemp {
 
     @Override
     public String getEnglishDescription() {
-        return "All players are forced to constantly jump";
+        return "All players are forced to constantly jump (Event currently online in dev. You will not encounter this event in a release.)";
     }
 
     @Override
