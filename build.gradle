@@ -9,7 +9,12 @@ buildscript {
     }
 }
 
+plugins {
+    id "com.matthewprenger.cursegradle" version '1.4.0'
+}
+
 apply plugin: 'net.minecraftforge.gradle'
+
 
 group = 'com.kotakotik'
 version = "${minecraft_version}-${mod_version}"
@@ -120,10 +125,54 @@ jar {
                 "Specification-Vendor"    : "kotakotik22",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
-                "Implementation-Version"  : mod_version,
+                "Implementation-Version"  : "${mod_version}-${release_type}",
                 "Implementation-Vendor"   : "kotakotik22",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
+    }
+}
+
+// System.getenv("CURSEFORGE_KEY")
+curseforge {
+    // i really dont understand gradle im just trying things until i found one that works lol
+    def changelogR = { ->
+        def gchangelog = project.file("changelog.md").getText()
+        if(release_type == "snapshot") {
+            gchangelog = "This is a snapshot. It has not been tested, and does not have a changelog"
+        }
+        return gchangelog
+    }
+    def nameR = { ->
+        switch (release_type) {
+            case "snapshot":
+                return "Snapshot ${new Date().format("yy.MM.dd")}"
+                break;
+            case "beta":
+                return "Beta ${mod_version}-${release_type}"
+                break;
+            case "release":
+                return "Release ${mod_version}-${release_type}"
+        }
+    }
+    def typeR = { ->
+        if(release_type == "snapshot") {
+            return "alpha"
+        }
+        return release_type
+    }
+    project {
+        id = '433332'
+        changelog = changelogR
+        releaseType = typeR
+        apiKey = System.getenv("CURSEFORGE_KEY")
+
+        for(String vers : project.file("mcversions.txt").getText().split(",")) {
+            addGameVersion(vers)
+        }
+
+        mainArtifact(jar) {
+            displayName = nameR
+        }
     }
 }
 
