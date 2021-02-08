@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class ChaosEvent {
+public abstract class ChaosEvent implements Creditable {
     public abstract String getEnglish();
     public abstract String getEnglishDescription();
     public abstract String getId();
@@ -132,6 +132,7 @@ public abstract class ChaosEvent {
         return temp;
     }
 
+    @Override
     public List<Credit> getCredits() {
         return new ArrayList<>();
     }
