@@ -45,6 +45,8 @@ public abstract class ChaosEvent implements Creditable {
         return getWikiFirst() + wikiReplace(getEnglish());
     }
 
+    // EXTRA CONFIG
+
     public String generateWikiPage() {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -72,6 +74,17 @@ public abstract class ChaosEvent implements Creditable {
                         append(" (``").append(config.id).append("``)");
             }
         }
+
+        // CREDIT
+
+        if(!getCredits().isEmpty()) {
+            stringBuilder.append("\n\n## Credits");
+            for(Credit credit : getCredits()) {
+                stringBuilder.append("\n* ").append(credit.getText());
+            }
+        }
+
+        // EXTRA INFO
 
         extra.put("has extra config", String.valueOf(!getExtraConfig().isEmpty()));
         extra.put("enabled by default", String.valueOf(isEnabledOnDefault()));
