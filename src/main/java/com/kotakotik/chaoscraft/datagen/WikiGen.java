@@ -61,7 +61,7 @@ public class WikiGen implements IDataProvider {
 
     private void generateEventPages() throws IOException {
         for(ChaosEvent event : events) {
-            if(isEventBlacklisted(event)) continue;
+//            if(isEventBlacklisted(event)) continue;
             saveEvent(event.generateWikiPage(), getPageName(event));
         }
     }
