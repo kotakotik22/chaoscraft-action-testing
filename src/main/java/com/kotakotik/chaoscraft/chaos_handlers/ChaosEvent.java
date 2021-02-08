@@ -75,6 +75,12 @@ public abstract class ChaosEvent implements Creditable {
             }
         }
 
+        // TEMP EVENT INFO
+
+        if(this instanceof ChaosEventTemp) {
+            stringBuilder.append("\n\nThis is a [[Temporary event]], and it lasts ").append(((ChaosEventTemp) this).getDuration()).append(" seconds");
+        }
+
         // CREDIT
 
         if(!getCredits().isEmpty()) {
