@@ -36,8 +36,6 @@ public class TEventCantBreathe extends ChaosEventTemp {
         return 5;
     }
 
-    public static Field refl = ObfuscationReflectionHelper.findField(Entity.class, "field_70171_ac");
-
     int ticks = 0;
 
     @Override

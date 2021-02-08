@@ -1,5 +1,7 @@
 {
   "chaoscraft.event.actually_real_diamond": "Actually real diamond",
+  "chaoscraft.event.bonk": "Bonk!",
+  "chaoscraft.event.bonk_bat": "Bonk bat!",
   "chaoscraft.event.cant_breathe": "I can't breathe!",
   "chaoscraft.event.cant_stop_jumping": "Can't stop jumping",
   "chaoscraft.event.charged_attack": "Charged attack!",
@@ -11,7 +13,9 @@
   "chaoscraft.event.invert_x_and_z": "Swap X and Z",
   "chaoscraft.event.kill_all_players": "Kill all players",
   "chaoscraft.event.lava_ceiling": "Lava ceiling",
+  "chaoscraft.event.manhunt": "Manhunt",
   "chaoscraft.event.outta_this_world": "Outta this world",
+  "chaoscraft.event.stun": "Stun",
   "chaoscraft.event.teleport_all_players_up": "Teleport all players up",
   "chaoscraft.event.ten_hour_mining_session": "Ten hour mining session",
   "chaoscraft.event.tnt_rain": "TNT Rain",
@@ -26,5 +30,6 @@
   "death.attack.chaoscraft.deadly_sun": "%s shouldn't have gone on land",
   "death.attack.chaoscraft.kill_all_players": "%s got killed by chaos",
   "death.attack.chaoscraft.totally_real_diamond_death": "%s found out that the diamond was actually fake",
+  "item.chaoscraft.bonk_bat": "Bonk bat",
   "item.chaoscraft.totally_real_diamond": "Totally real diamond"
 }
