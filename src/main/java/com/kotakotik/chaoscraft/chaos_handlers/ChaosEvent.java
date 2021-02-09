@@ -86,7 +86,9 @@ public abstract class ChaosEvent implements Creditable {
         if(!getCredits().isEmpty()) {
             stringBuilder.append("\n\n## Credits");
             for(Credit credit : getCredits()) {
-                stringBuilder.append("\n* ").append(credit.getText());
+                stringBuilder.append("\n* ")
+                        .append("[").append(credit.getDisplayName()).append("]")
+                        .append("(").append(credit.getText()).append(")");
             }
         }
 
