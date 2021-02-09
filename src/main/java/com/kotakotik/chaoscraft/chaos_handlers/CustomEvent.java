@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.server.MinecraftServer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomEvent {
@@ -43,7 +44,7 @@ public class CustomEvent {
     private String name;
 
     @SerializedName("commands")
-    private List<String> commands;
+    private List<String> commands = new ArrayList<>();
 
     public String getName() {
         return name;

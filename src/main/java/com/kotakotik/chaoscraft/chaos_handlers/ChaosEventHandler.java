@@ -179,14 +179,24 @@ public class ChaosEventHandler {
         List<ChaosEvent> list = new ArrayList<>();
         Path gamedir = FMLPaths.GAMEDIR.get();
         Path eventFolder = gamedir.resolve("chaoscraft.custom_events");
+        Path TEventFolder = gamedir.resolve("chaoscraft.custom_temp_events");
         if(!eventFolder.toFile().exists()) {
             eventFolder.toFile().mkdir();
+        }
+        if(!TEventFolder.toFile().exists()) {
+            TEventFolder.toFile().mkdir();
         }
         for(File file : Objects.requireNonNull(eventFolder.toFile().listFiles())) {
             String json = FileUtils.readFile(file.toPath());
            CustomEvent customEvent = CustomEvent.getCustom(json, GSON);
            ChaosEvent event = customEvent.getEvent(Server);
            list.add(event);
+        }
+        for(File file : Objects.requireNonNull(TEventFolder.toFile().listFiles())) {
+            String json = FileUtils.readFile(file.toPath());
+            CustomEvent customEvent = CustomEventTemp.getCustom(json, GSON);
+            ChaosEvent event = customEvent.getEvent(Server);
+            list.add(event);
         }
         return list;
     }
