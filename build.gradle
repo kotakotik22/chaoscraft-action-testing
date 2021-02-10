@@ -140,7 +140,7 @@ curseforge {
         if(release_type == "snapshot") {
             gchangelog += "\n\nThis is a snapshot, it has not been tested."
         } else if(release_type == "beta") {
-            gchangelog =+ "\n\nThis is a beta version, and it has been barely tested. If you find any issuges, please report it on the [Github issues page](https://github.com/kotakotik22/chaoscraft/issues)"
+            gchangelog += "\n\nThis is a beta version, and it has been barely tested. If you find any issuges, please report it on the [Github issues page](https://github.com/kotakotik22/chaoscraft/issues)"
         }
         return gchangelog
     }
@@ -150,10 +150,10 @@ curseforge {
                 return "Snapshot ${new Date().format("yy.MM.dd.HH")}"
                 break;
             case "beta":
-                return "Beta ${mod_version}-${release_type}"
+                return "Beta ${mod_version}-"
                 break;
             case "release":
-                return "Release ${mod_version}-${release_type}"
+                return "Release ${mod_version}"
         }
     }
     def typeR = { ->
