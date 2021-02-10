@@ -166,9 +166,10 @@ public class ChaosEventHandler {
     }
 
     @SubscribeEvent
-    public static void onServerStarted(FMLServerStartedEvent event) throws IOException {
+    public static void onServerStarted(FMLServerStartedEvent event) throws IOException, IllegalAccessException, InstantiationException, ClassNotFoundException {
         Server = event.getServer();
         updateEnabledEvents();
+        Chaos.registerEvents();
     }
 
     public static int getTicks() {

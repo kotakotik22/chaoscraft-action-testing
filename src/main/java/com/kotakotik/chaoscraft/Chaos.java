@@ -54,8 +54,6 @@ public class Chaos {
 
         ChaosEventHandler.customEvents = ChaosEventHandler.registerCustomEvents();
 
-        registerEvents();
-
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG, "chaoscraft.toml");
 
         Registration.register();
