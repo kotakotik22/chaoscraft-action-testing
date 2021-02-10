@@ -2,6 +2,7 @@ package com.kotakotik.chaoscraft.networking;
 
 import com.kotakotik.chaoscraft.Chaos;
 import com.kotakotik.chaoscraft.chaos_events.temp.TEventCantStopJumping;
+import com.kotakotik.chaoscraft.chaos_events.temp.TEventSpeedRace;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerRestart;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerSet;
 import com.kotakotik.chaoscraft.networking.packets.PacketTimerSync;
@@ -85,6 +86,9 @@ public class ModPacketHandler {
         register(PacketTimerSync.class);
 
         register(TEventCantStopJumping.Jump.class);
+
+        register(TEventSpeedRace.Started.class);
+        register(TEventSpeedRace.Ended.class);
     }
 
     public static void sendToClient(Object packet, ServerPlayerEntity player) {
