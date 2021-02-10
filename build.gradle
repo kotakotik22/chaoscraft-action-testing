@@ -138,7 +138,9 @@ curseforge {
     def changelogR = { ->
         def gchangelog = project.file("changelog.md").getText()
         if(release_type == "snapshot") {
-            gchangelog = "This is a snapshot. It has not been tested, and does not have a changelog"
+            gchangelog += "\n\nThis is a snapshot, it has not been tested."
+        } else if(release_type == "beta") {
+            gchangelog =+ "\n\nThis is a beta version, and it has been barely tested. If you find any issuges, please report it on the [Github issues page](https://github.com/kotakotik22/chaoscraft/issues)"
         }
         return gchangelog
     }
