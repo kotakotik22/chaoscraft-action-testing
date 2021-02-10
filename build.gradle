@@ -167,6 +167,7 @@ curseforge {
         changelog = changelogR
         releaseType = typeR
         apiKey = System.getenv("CURSEFORGE_KEY")
+        changelogType = "markdown"
 
         for(String vers : project.file("mcversions.txt").getText().split(",")) {
             addGameVersion(vers)
