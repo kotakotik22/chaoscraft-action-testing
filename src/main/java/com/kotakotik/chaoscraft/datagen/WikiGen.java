@@ -9,11 +9,9 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
 import org.apache.commons.lang3.text.translate.JavaUnicodeEscaper;
+import org.apache.logging.log4j.LogManager;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.CharBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,6 +30,10 @@ public class WikiGen implements IDataProvider {
 
     @Override
     public void act(DirectoryCache cache) throws IOException {
+        if(!gen.getOutputFolder().resolve(folder).toFile().exists()) {
+            LogManager.getLogger().info("chaoscraft.wiki does not exist. skipping wiki generation");
+            return;
+        }
         save("hello world", "hello");
         readBlacklist();
         generateEventPages();
