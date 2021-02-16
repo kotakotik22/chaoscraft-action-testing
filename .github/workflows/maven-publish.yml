@@ -12,6 +12,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Publish to maven local
-        run: /gradlew publish
+        run: ./gradlew publish
       - run: scp -r /maven/* root@51.158.65.226:/var/www/mavenrepos
         name: Copy to server
