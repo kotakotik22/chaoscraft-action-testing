@@ -13,5 +13,16 @@ jobs:
         run: chmod +x gradlew
       - name: Publish to maven local
         run: ./gradlew publish
-      - run: scp -r /maven/* root@51.158.65.226:/var/www/mavenrepos
-        name: Copy to server
+      - name: SCP Upload
+        uses: betanzos/scp-upload@v1
+        with:
+          # Source local file path
+          source: /maven/
+          # Remote host
+          host: ${{SECRETS.DEPLOY_HOST}}
+          # Remote host username
+          username: ${{SECRETS.DEPLOY_USERNAME}}
+          # SSH private key
+          key: ${{SECRETS.DEPLOY_KEY}}
+          # Remote directory to copy the file
+          remote_dir: /var/www/mavenrepos
