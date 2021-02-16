@@ -1,0 +1,16 @@
+name: 'Maven publish'
+on: [release]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: publish
+      - uses: hengkx/ssh-deploy@v1.0.1
+        env:
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          USERNAME: ${{ secrets.DEPLOY_USERNAME }}
+          PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
+          SOURCE: 'maven/'
+          TARGET: ${{ secrets.DEPLOY_DEST_PATH }}
