@@ -23,14 +23,19 @@ public class ChaosEventRegister {
         for(Class<?> clazz : classes) {
             if(ChaosEvent.class.isAssignableFrom(clazz)) {
                 eventClasses.add((Class<ChaosEvent>) clazz);
+                String name = "MISSING";
                 try {
-                    events.add((ChaosEvent) clazz.getConstructor().newInstance());
+                    ChaosEvent event = (ChaosEvent) clazz.getConstructor().newInstance();
+                    name = event.getId();
+                    events.add(event);
                 } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     e.printStackTrace();
                 }
+                ChaoscraftFabric.log.info(String.format("event %s registered (%s)", name, clazz.getName()));
             } else {
                 ChaoscraftFabric.log.warn(String.format("class %s is annoted with ChaosEventReg but does not implement ChaosEvent (%s)", clazz.getSimpleName(), clazz.getName()));
             }
         }
+        ChaoscraftFabric.log.info(String.format("registered %d chaos events", events.size()));
     }
 }
