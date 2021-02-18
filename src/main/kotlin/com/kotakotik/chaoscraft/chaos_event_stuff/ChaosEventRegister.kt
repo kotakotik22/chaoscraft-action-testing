@@ -2,16 +2,24 @@ package com.kotakotik.chaoscraft.chaos_event_stuff
 
 import com.kotakotik.chaoscraft.ChaoscraftKotlin
 import com.kotakotik.chaoscraft.utils.CCReflections
+import net.minecraft.server.MinecraftServer
 import java.lang.reflect.InvocationTargetException
 
 import java.util.ArrayList
 
 
-object ChaosEventRegister {
+class ChaosEventRegister {
     val eventClasses: MutableList<Class<ChaosEvent>> = ArrayList()
     val events: MutableList<ChaosEvent> = ArrayList()
 
+    val handler: ChaosEventHandler = ChaosEventHandler();
+
+    fun tick(server: MinecraftServer) {
+        handler.tick(server)
+    }
+
     fun reg() {
+        handler.init()
         ChaoscraftKotlin.log.info("registering events",)
         val implem: Set<Class<out ChaosEvent>> = CCReflections.getSubTypesOf(ChaosEvent::class.java)
         val annot: Set<Class<*>> = CCReflections.getTypesAnnotatedWith(ChaosEventReg::class.java)
@@ -20,7 +28,7 @@ object ChaosEventRegister {
         for (clazz in classes) {
             if (ChaosEvent::class.java.isAssignableFrom(clazz)) {
                 eventClasses.add(clazz as Class<ChaosEvent>)
-                var name: String = "?"
+                var name = "?"
                 try {
                     val ev: ChaosEvent = clazz.getConstructor().newInstance() as ChaosEvent
                     name = ev.getId()
