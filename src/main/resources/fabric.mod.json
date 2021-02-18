@@ -1,9 +1,10 @@
 {
   "schemaVersion": 1,
-  "id": "chaoscraft-fabric",
+  "id": "chaoscraft",
   "version": "${version}",
+
   "name": "Chaoscraft",
-  "description": "",
+  "description": "TODO",
   "authors": [
     "kotakotik22"
   ],
@@ -11,22 +12,24 @@
     "website": "kotakotik.com"
   },
   "license": "MIT",
-  "icon": "assets/chaoscraft-fabric/icon.png",
+  "icon": "assets/chaoscraft/icon.png",
+
   "environment": "*",
   "entrypoints": {
-    "client": [
-      "com.kotakotik.chaoscraftfabric.client.ChaoscraftFabricClient"
-    ],
     "main": [
-      "com.kotakotik.chaoscraftfabric.ChaoscraftFabric"
+      "com.kotakotik.chaoscraft.Chaoscraft"
     ]
   },
   "mixins": [
-    "chaoscraft-fabric.mixins.json"
+    "chaoscraft.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.11.1",
+    "fabricloader": ">=0.8.7",
     "fabric": "*",
-    "minecraft": "1.16.5"
+    "fabric-language-kotlin": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "flamingo": "*"
   }
 }

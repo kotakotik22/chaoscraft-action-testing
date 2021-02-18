@@ -1,7 +1,6 @@
 {
   "required": true,
-  "minVersion": "0.8",
-  "package": "com.kotakotik.chaoscraftfabric.mixin",
+  "package": "com.kotakotik.chaoscraft.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],
