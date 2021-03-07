@@ -117,8 +117,6 @@ run/
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
 
-chaoscraft.wiki
-
 crowdin.yml
 /crowdin.yml
 /maven/
