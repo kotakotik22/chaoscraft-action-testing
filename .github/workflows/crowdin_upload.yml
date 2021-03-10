@@ -20,6 +20,8 @@ jobs:
           source: src/generated/resources/assets/chaoscraft/lang/en_us.json
           download_translations: false
           translation: "%locale%"
+          api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
