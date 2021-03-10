@@ -31,5 +31,6 @@
   "death.attack.chaoscraft.kill_all_players": "%s got killed by chaos",
   "death.attack.chaoscraft.totally_real_diamond_death": "%s found out that the diamond was actually fake",
   "item.chaoscraft.bonk_bat": "Bonk bat",
-  "item.chaoscraft.totally_real_diamond": "Totally real diamond"
+  "item.chaoscraft.totally_real_diamond": "Totally real diamond",
+  "test": "test"
 }
