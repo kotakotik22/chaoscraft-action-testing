@@ -4,4 +4,4 @@ project_identifier: chaoscraft
 preserve_hierarchy: false
 files:
   - source: src/generated/resources/assets/chaoscraft/lang/en_us.json
-    translation: ""
+    translation: "%locale%"
