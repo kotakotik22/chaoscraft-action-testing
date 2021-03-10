@@ -10,7 +10,7 @@
     * Stun
     * Bonk!
     * Bonk bat (along with the Bonk bat item)
-    * Manhunt
+    * Manhunt commit thing
     * TNT rain
 - Add custom events
 - Start using common config instead of server config
